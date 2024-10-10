@@ -3,6 +3,11 @@ using BLL.Interfaces;
 
 namespace BLL.Services
 {
+    /*
+     * 
+     Service bản chung(Generic) có thể dùng cho mọi Entity
+     *
+     */
     public class GenericService<T> : IGenericService<T> where T : class
     {
         private readonly IGenericRepository<T> _repository;

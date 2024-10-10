@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    internal class TripVehicle
+    public class TripVehicle
     {
         public int TripVehicleID { get; set; }
         public int TripID { get; set; }

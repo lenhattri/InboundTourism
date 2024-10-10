@@ -10,10 +10,10 @@ namespace Core.Entities
     {
         public int BookingID { get; set; }
         public int TripID { get; set; }
-        public Trip Trip { get; set; }
+        public Trip Trip { get; set; } //Khóa ngoại
 
         public int CustomerID { get; set; }
-        public User User { get; set; }
+        public User User { get; set; } //Khóa ngoại
 
         public DateTime BookingDate { get; set; }
         public int NumberOfGuests { get; set; }

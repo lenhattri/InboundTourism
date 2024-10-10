@@ -14,7 +14,7 @@ namespace Core.Entities
         public string City { get; set; }
         public string Country { get; set; }
 
-        // Relationships
+        // Khóa ngoại
         public ICollection<TourLocation> TourLocations { get; set; }
     }
 

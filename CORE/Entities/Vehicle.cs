@@ -15,6 +15,7 @@ namespace Core.Entities
         public int Capacity { get; set; }
 
         public decimal VehiclePricing { get; set; }
+        //Khóa ngoại
         public ICollection<Trip> Trips { get; set; }
     }
 

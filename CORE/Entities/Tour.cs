@@ -8,11 +8,13 @@ namespace Core.Entities
 {
     public class Tour
     {
-        public int TourID { get; set; }
+        public int TourID { get; set; } //Khóa ngoại
         public string TourName { get; set; }
         public string Description { get; set; }
         //public decimal BasePrice { get; set; }
 
+
+        //Khóa ngoại
         public ICollection<Trip> Trips { get; set; }
         public ICollection<TourLocation> TourLocations { get; set; }
     }
