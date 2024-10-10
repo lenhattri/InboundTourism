@@ -11,9 +11,8 @@ namespace Core.Entities
         public int TourID { get; set; }
         public string TourName { get; set; }
         public string Description { get; set; }
-        public decimal BasePrice { get; set; }
+        //public decimal BasePrice { get; set; }
 
-        // Relationships
         public ICollection<Trip> Trips { get; set; }
         public ICollection<TourLocation> TourLocations { get; set; }
     }

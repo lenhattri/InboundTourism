@@ -14,5 +14,6 @@ namespace Core.Entities
         public DateTime USageStartTime { get; set; }
         public DateTime USageEndTime { get; set; }
 
+        
     }
 }
