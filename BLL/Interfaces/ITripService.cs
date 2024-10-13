@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    internal interface ITripService
+    public interface ITripService
     {
         public IEnumerable<Trip> GetTrips();
         public Trip GetTrip(int id);

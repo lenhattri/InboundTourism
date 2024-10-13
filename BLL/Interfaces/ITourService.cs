@@ -3,7 +3,7 @@
 
 namespace BLL.Interfaces
 {
-    internal interface ITourService
+    public interface ITourService
     {
         public IEnumerable<Tour> GetTours();
         public Tour GetTour(int id);
