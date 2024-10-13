@@ -1,4 +1,4 @@
-﻿namespace Views.Forms
+﻿namespace Views.Views.Auth
 {
     partial class Form1
     {
