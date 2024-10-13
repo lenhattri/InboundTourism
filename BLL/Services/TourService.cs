@@ -16,7 +16,7 @@ namespace BLL.Services
         {
             return _tourRepository.GetAll();
         }
-        public Tour GetTour(int id)
+        public Tour GetTour(Guid id)
         {
             return _tourRepository.GetById(id);
         }
@@ -25,7 +25,7 @@ namespace BLL.Services
         {
             _tourRepository.Update(tour);
         }
-        public void DeleteTour(int id)
+        public void DeleteTour(Guid id)
         {
             _tourRepository.Delete(id);
         }

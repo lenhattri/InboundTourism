@@ -8,7 +8,7 @@ namespace Core.Entities
 {
     public class Location
     {
-        public int LocationID { get; set; }
+        public Guid LocationID { get; set; }
         public string LocationName { get; set; }
         public string Description { get; set; }
         public string City { get; set; }

@@ -18,7 +18,7 @@ namespace BLL.Services
             return _bookingRepository.GetAll();
         }
 
-        public Booking GetBooking(int id)
+        public Booking GetBooking(Guid id)
         {
             return _bookingRepository.GetById(id);
         }
@@ -28,7 +28,7 @@ namespace BLL.Services
             _bookingRepository.Update(booking);
         }
 
-        public void DeleteBooking(int id)
+        public void DeleteBooking(Guid id)
         {
             _bookingRepository.Delete(id);
         }

@@ -8,7 +8,7 @@ namespace Core.Entities
 {
     public class Tour
     {
-        public int TourID { get; set; } //Khóa ngoại
+        public Guid TourID { get; set; } //Khóa ngoại
         public string TourName { get; set; }
         public string Description { get; set; }
         //public decimal BasePrice { get; set; }

@@ -8,9 +8,9 @@ namespace Core.Entities
 {
     public class TripVehicle
     {
-        public int TripVehicleID { get; set; }
-        public int TripID { get; set; }
-        public int VehicleID { get; set; }
+        public Guid TripVehicleID { get; set; }
+        public Guid TripID { get; set; }
+        public Guid VehicleID { get; set; }
         public DateTime USageStartTime { get; set; }
         public DateTime USageEndTime { get; set; }
 

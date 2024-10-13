@@ -32,7 +32,7 @@ namespace API.Controllers
         // GET: api/v1/booking/{id}
         // Lấy thông tin chi tiết của 1 đơn đặt chỗ dựa trên ID
         [HttpGet("{id}")]
-        public ActionResult<Booking> GetBooking(int id)
+        public ActionResult<Booking> GetBooking(Guid id)
         {
             var booking = _bookingService.GetBooking(id); // Lấy thông tin Booking theo ID
 
@@ -57,7 +57,7 @@ namespace API.Controllers
         // PUT: api/v1/booking/{id}
         // Cập nhật thông tin của một đơn đặt chỗ dựa trên ID
         [HttpPut("{id}")]
-        public ActionResult UpdateBooking(int id, Booking booking)
+        public ActionResult UpdateBooking(Guid id, Booking booking)
         {
             // Kiểm tra nếu ID trong URL không khớp với ID của booking
             if (id != booking.BookingID)
@@ -72,7 +72,7 @@ namespace API.Controllers
         // DELETE: api/v1/booking/{id}
         // Xóa một đơn đặt chỗ dựa trên ID
         [HttpDelete("{id}")]
-        public ActionResult DeleteBooking(int id)
+        public ActionResult DeleteBooking(Guid id)
         {
             _bookingService.DeleteBooking(id); // Thực hiện xóa đơn đặt chỗ qua service
             return NoContent(); // Trả về HTTP 204 (NoContent) khi xóa thành công

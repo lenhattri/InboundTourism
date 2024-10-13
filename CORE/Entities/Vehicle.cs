@@ -9,7 +9,7 @@ namespace Core.Entities
     //Entity của xe
     public class Vehicle
     {
-        public int VehicleID { get; set; }
+        public Guid VehicleID { get; set; }
         public string VehicleType { get; set; }
         public string LicensePlate { get; set; }
         public int Capacity { get; set; }

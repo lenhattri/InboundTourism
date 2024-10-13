@@ -5,9 +5,9 @@ namespace BLL.Interfaces
     public interface IVehicleService
     {
         IEnumerable<Vehicle> GetVehicles();
-        Vehicle GetVehicle(int id);
+        Vehicle GetVehicle(Guid id);
         void UpdateVehicle(Vehicle vehicle);
-        void DeleteVehicle(int id);
+        void DeleteVehicle(Guid id);
         void AddVehicle(Vehicle vehicle);
     }
 }

@@ -3,7 +3,7 @@ namespace Core.Entities
 {
     public class User
     {
-        public int UserID { get; set; }
+        public Guid UserID { get; set; }
         public Role Role { get; set; }
         public string FullName { get; set; }
         public string PhoneNumber { get; set; }

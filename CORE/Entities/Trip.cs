@@ -8,8 +8,8 @@ namespace Core.Entities
 {
     public class Trip
     {
-        public int TripID { get; set; }
-        public int TourID { get; set; }
+        public Guid TripID { get; set; }
+        public Guid TourID { get; set; }
         public Tour Tour { get; set; }
         public decimal Price { get; set; }
         public DateTime StartDate { get; set; }

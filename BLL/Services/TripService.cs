@@ -17,7 +17,7 @@ namespace BLL.Services
         {
             return _tripRepository.GetAll();
         }
-        public Trip GetTrip(int id)
+        public Trip GetTrip(Guid id)
         {
             return _tripRepository.GetById(id);
         }
@@ -26,7 +26,7 @@ namespace BLL.Services
         {
             _tripRepository.Update(Trip);
         }
-        public void DeleteTrip(int id)
+        public void DeleteTrip(Guid id)
         {
             _tripRepository.Delete(id);
         }

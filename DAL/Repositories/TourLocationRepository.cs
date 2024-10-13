@@ -22,7 +22,7 @@ namespace DAL.Repositories
         {
             return _dbSet.ToList();
         }
-        public TourLocation Get(int TourID,int LocationID) {
+        public TourLocation Get(Guid TourID, Guid LocationID) {
             return _dbSet.SingleOrDefault(tl => tl.TourID == TourID && tl.LocationID == LocationID);
         }
         public void Update(TourLocation tourLocation)
@@ -31,7 +31,7 @@ namespace DAL.Repositories
             _context.SaveChanges();
 
         }
-        public void Delete(int TourID, int LocationID)
+        public void Delete(Guid TourID, Guid LocationID)
         {
             TourLocation entity = _dbSet.SingleOrDefault(tl => tl.TourID == TourID && tl.LocationID == LocationID);
             if (entity != null)

@@ -32,7 +32,7 @@ namespace API.Controllers
         // GET: api/v1/trip/{id}
         // Lấy thông tin chi tiết của 1 chuyến đi dựa trên ID
         [HttpGet("{id}")]
-        public ActionResult<Trip> GetTrip(int id)
+        public ActionResult<Trip> GetTrip(Guid id)
         {
             var trip = _tripService.GetTrip(id); // Lấy thông tin Trip theo ID
 
@@ -57,7 +57,7 @@ namespace API.Controllers
         // PUT: api/v1/trip/{id}
         // Cập nhật thông tin của một chuyến đi dựa trên ID
         [HttpPut("{id}")]
-        public ActionResult UpdateTrip(int id, Trip trip)
+        public ActionResult UpdateTrip(Guid id, Trip trip)
         {
             // Kiểm tra nếu ID trong URL không khớp với ID của trip
             if (id != trip.TripID)
@@ -72,7 +72,7 @@ namespace API.Controllers
         // DELETE: api/v1/trip/{id}
         // Xóa một chuyến đi dựa trên ID
         [HttpDelete("{id}")]
-        public ActionResult DeleteTrip(int id)
+        public ActionResult DeleteTrip(Guid id)
         {
             _tripService.DeleteTrip(id); // Thực hiện xóa chuyến đi qua service
             return NoContent(); // Trả về HTTP 204 (NoContent) khi xóa thành công

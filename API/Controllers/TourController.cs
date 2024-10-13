@@ -32,7 +32,7 @@ namespace API.Controllers
         // GET: api/v1/tour/{id}
         // Lấy thông tin chi tiết của 1 tour dựa trên ID
         [HttpGet("{id}")]
-        public ActionResult<Tour> GetTour(int id)
+        public ActionResult<Tour> GetTour(Guid id)
         {
             var tour = _tourService.GetTour(id); // Lấy thông tin Tour theo ID
 
@@ -57,7 +57,7 @@ namespace API.Controllers
         // PUT: api/v1/tour/{id}
         // Cập nhật thông tin của một tour dựa trên ID
         [HttpPut("{id}")]
-        public ActionResult UpdateTour(int id, Tour tour)
+        public ActionResult UpdateTour(Guid id, Tour tour)
         {
             // Kiểm tra nếu ID trong URL không khớp với ID của tour
             if (id != tour.TourID)
@@ -72,7 +72,7 @@ namespace API.Controllers
         // DELETE: api/v1/tour/{id}
         // Xóa một tour dựa trên ID
         [HttpDelete("{id}")]
-        public ActionResult DeleteTour(int id)
+        public ActionResult DeleteTour(Guid id)
         {
             _tourService.DeleteTour(id); // Thực hiện xóa tour qua service
             return NoContent(); // Trả về HTTP 204 (NoContent) khi xóa thành công

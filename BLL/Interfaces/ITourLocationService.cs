@@ -5,9 +5,9 @@ namespace BLL.Interfaces
     public interface ITourLocationService
     {
         IEnumerable<TourLocation> GetTourLocations();
-        TourLocation GetTourLocation(int id);
+        TourLocation GetTourLocation(Guid id);
         void UpdateTourLocation(TourLocation tourLocation);
-        void DeleteTourLocation(int id);
+        void DeleteTourLocation(Guid id);
         void AddTourLocation(TourLocation tourLocation);
     }
 }

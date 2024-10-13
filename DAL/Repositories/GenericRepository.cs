@@ -29,7 +29,7 @@ namespace DAL.Repositories
             return _dbSet.ToList();
         }
 
-        public T GetById(int id)
+        public T GetById(Guid id)
         {
             return _dbSet.Find(id);
         }
@@ -47,7 +47,7 @@ namespace DAL.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var entity = _dbSet.Find(id);
             if (entity != null)

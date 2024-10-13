@@ -12,9 +12,9 @@ namespace DAL.Interfaces
     {
         IEnumerable<TourLocation> GetAll();
 
-        TourLocation GetById(int TourID, int LocationID);
+        TourLocation GetById(Guid TourID, Guid LocationID);
 
-        void Delete(int TourID, int LocationID);
+        void Delete(Guid TourID, Guid LocationID);
 
         void Update(TourLocation TourLocation);
     }

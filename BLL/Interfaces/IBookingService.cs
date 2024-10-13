@@ -5,9 +5,9 @@ namespace BLL.Interfaces
     public interface IBookingService
     {
         IEnumerable<Booking> GetBookings();
-        Booking GetBooking(int id);
+        Booking GetBooking(Guid id);
         void UpdateBooking(Booking booking);
-        void DeleteBooking(int id);
+        void DeleteBooking(Guid id);
         void AddBooking(Booking booking);
     }
 }

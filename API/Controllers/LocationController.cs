@@ -32,7 +32,7 @@ namespace API.Controllers
         // GET: api/v1/location/{id}
         // Lấy thông tin chi tiết của 1 địa điểm dựa trên ID
         [HttpGet("{id}")]
-        public ActionResult<Location> GetLocation(int id)
+        public ActionResult<Location> GetLocation(Guid id)
         {
             var location = _locationService.GetLocation(id); // Lấy thông tin Location theo ID
 
@@ -57,7 +57,7 @@ namespace API.Controllers
         // PUT: api/v1/location/{id}
         // Cập nhật thông tin của một địa điểm dựa trên ID
         [HttpPut("{id}")]
-        public ActionResult UpdateLocation(int id, Location location)
+        public ActionResult UpdateLocation(Guid id, Location location)
         {
             // Kiểm tra nếu ID trong URL không khớp với ID của location
             if (id != location.LocationID)
@@ -72,7 +72,7 @@ namespace API.Controllers
         // DELETE: api/v1/location/{id}
         // Xóa một địa điểm dựa trên ID
         [HttpDelete("{id}")]
-        public ActionResult DeleteLocation(int id)
+        public ActionResult DeleteLocation(Guid id)
         {
             _locationService.DeleteLocation(id); // Thực hiện xóa địa điểm qua service
             return NoContent(); // Trả về HTTP 204 (NoContent) khi xóa thành công

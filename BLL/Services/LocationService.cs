@@ -18,7 +18,7 @@ namespace BLL.Services
             return _locationRepository.GetAll();
         }
 
-        public Location GetLocation(int id)
+        public Location GetLocation(Guid id)
         {
             return _locationRepository.GetById(id);
         }
@@ -28,7 +28,7 @@ namespace BLL.Services
             _locationRepository.Update(location);
         }
 
-        public void DeleteLocation(int id)
+        public void DeleteLocation(Guid id)
         {
             _locationRepository.Delete(id);
         }

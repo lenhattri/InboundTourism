@@ -18,7 +18,7 @@ namespace BLL.Services
             return _vehicleRepository.GetAll();
         }
 
-        public Vehicle GetVehicle(int id)
+        public Vehicle GetVehicle(Guid id)
         {
             return _vehicleRepository.GetById(id);
         }
@@ -28,7 +28,7 @@ namespace BLL.Services
             _vehicleRepository.Update(vehicle);
         }
 
-        public void DeleteVehicle(int id)
+        public void DeleteVehicle(Guid id)
         {
             _vehicleRepository.Delete(id);
         }

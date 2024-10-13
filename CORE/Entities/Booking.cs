@@ -8,8 +8,8 @@ namespace Core.Entities
 {
     public class Booking
     {
-        public int BookingID { get; set; }
-        public int TripID { get; set; }
+        public Guid BookingID { get; set; }
+        public Guid TripID { get; set; }
         public Trip Trip { get; set; } //Khóa ngoại
 
         public int CustomerID { get; set; }

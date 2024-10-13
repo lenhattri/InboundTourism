@@ -18,7 +18,7 @@ namespace BLL.Services
             return _userRepository.GetAll();
         }
 
-        public User GetUser(int id)
+        public User GetUser(Guid id)
         {
             return _userRepository.GetById(id);
         }
@@ -28,7 +28,7 @@ namespace BLL.Services
             _userRepository.Update(user);
         }
 
-        public void DeleteUser(int id)
+        public void DeleteUser(Guid id)
         {
             _userRepository.Delete(id);
         }

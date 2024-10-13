@@ -22,7 +22,7 @@ namespace BLL.Services
             return _repository.GetAll();
         }
 
-        public T GetById(int id)
+        public T GetById(Guid id)
         {
             return _repository.GetById(id);
         }
@@ -37,7 +37,7 @@ namespace BLL.Services
             _repository.Update(entity);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             _repository.Delete(id);
         }

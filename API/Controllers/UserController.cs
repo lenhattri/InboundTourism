@@ -32,7 +32,7 @@ namespace API.Controllers
         // GET: api/v1/user/{id}
         // Lấy thông tin chi tiết của 1 user dựa trên ID
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(int id)
+        public ActionResult<User> GetUser(Guid id)
         {
             var user = _userService.GetUser(id); // Lấy thông tin user theo ID
 
@@ -57,7 +57,7 @@ namespace API.Controllers
         // PUT: api/v1/user/{id}
         // Cập nhật thông tin của một user dựa trên ID
         [HttpPut("{id}")]
-        public ActionResult UpdateUser(int id, User user)
+        public ActionResult UpdateUser(Guid id, User user)
         {
             // Kiểm tra nếu ID trong URL không khớp với ID của user
             if (id != user.UserID)
@@ -72,7 +72,7 @@ namespace API.Controllers
         // DELETE: api/v1/user/{id}
         // Xóa một user dựa trên ID
         [HttpDelete("{id}")]
-        public ActionResult DeleteUser(int id)
+        public ActionResult DeleteUser(Guid id)
         {
             _userService.DeleteUser(id); // Thực hiện xóa user qua service
             return NoContent(); // Trả về HTTP 204 (NoContent) khi xóa thành công
