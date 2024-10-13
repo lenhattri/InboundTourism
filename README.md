@@ -8,6 +8,10 @@
 - Winform .NET GUI
 - ASP.NET Core API
 - Entity Framework Core
+
+# Về thành viên
+- Lê Nhật Trí DPM225491
+- Huỳnh Trương Phát Đạt
 # Về cấu trúc
 
 - Core : Xác định các cấu trúc(khung) của các Thực thể(Từ đây gọi là Entity)
@@ -16,4 +20,6 @@
 - Base: Tầng này cung cấp các lớp config thay thế các lớp mặc định của C#(như HttpClient)
 - Views(Presentation layer): Tầng này cung cấp các giao diện UI(Ở đây là Winform)
 - API: Dùng các Service ở tầng BLL để quản lý data qua Endpoint: 127.0.0.1:5173/api/v1/
+
+![Sơ đồ hệ thống](https://github.com/lenhattri/InboundTourism/blob/master/Sodo.png)
 
