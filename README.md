@@ -8,7 +8,6 @@
 - Winform .NET GUI
 - ASP.NET Core API
 - Entity Framework 
-- 
 # Về cấu trúc
 
 - Core : Xác định các cấu trúc(khung) của các Thực thể(Từ đây gọi là Entity)
