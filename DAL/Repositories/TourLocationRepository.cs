@@ -1,10 +1,6 @@
 ﻿using Core.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace DAL.Repositories
 {
@@ -27,9 +23,14 @@ namespace DAL.Repositories
         }
         public void Update(TourLocation tourLocation)
         {
-            _dbSet.Add(tourLocation);
+            _dbSet.Attach(tourLocation);
+            _context.Entry(tourLocation).State = EntityState.Modified;
             _context.SaveChanges();
 
+        }
+        public void Add(TourLocation tourLocation) {
+            _dbSet.Add(tourLocation);
+            _context.SaveChanges();
         }
         public void Delete(Guid TourID, Guid LocationID)
         {
