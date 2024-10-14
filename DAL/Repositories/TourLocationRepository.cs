@@ -42,7 +42,7 @@ namespace DAL.Repositories
             }
             else
             {
-                throw new KeyNotFoundException($"TourLocation với TourID {TourID} và LocationID {LocationID} không tồn tại.");
+                throw new KeyNotFoundException($"TourLocation với TourID {TourID} và LocationID {LocationID} không tồn tại trong cơ sở dữ liệu");
             }
         }
 

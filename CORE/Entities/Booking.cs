@@ -12,7 +12,7 @@ namespace Core.Entities
         public Guid TripID { get; set; }
         public Trip Trip { get; set; } //Khóa ngoại
 
-        public int CustomerID { get; set; }
+        public Guid CustomerID { get; set; }
         public User User { get; set; } //Khóa ngoại
 
         public DateTime BookingDate { get; set; }
