@@ -1,6 +1,6 @@
 ﻿# Về Dự án
 
-- Đây là một dự án xây dựng ứng dụng Winform .NET về quản lý tuyến du lịch với kiến trúc dựa trên mô hình 3 lớp với ASP.NET Core API và Entify Core Framework
+- Đây là một dự án xây dựng ứng dụng Winform .NET về quản lý tuyến du lịch với kiến trúc dựa trên mô hình 3 lớp kết hợp RESTful API. Sử dụng ASP.NET Core API và Entify Framework Core
 
 
 # Về công nghệ
