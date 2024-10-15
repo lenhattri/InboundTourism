@@ -25,7 +25,6 @@ namespace DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            // Thiết lập khóa chính và khóa ngoại cho bảng trung gian TourLocation
             modelBuilder.Entity<TourLocation>()
                 .HasKey(tl => new { tl.TourID, tl.LocationID });
 

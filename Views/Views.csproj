@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\Auth\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="App\Auth\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -72,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\Admin\" />
-    <Folder Include="App\Auth\" />
     <Folder Include="App\Client\Pages\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,18 +10,15 @@ public static class ApiFetch
     {
         _httpClient = new HttpClient
         {
-            Timeout = TimeSpan.FromSeconds(30) // Thiết lập thời gian chờ mặc định
+            BaseAddress = new Uri("http://127.0.0.1:5173/api/v1"),
+            Timeout = TimeSpan.FromSeconds(30)
         };
 
-        // Đặt các tiêu đề mặc định
+
         _httpClient.DefaultRequestHeaders.Accept.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; HttpClientApp/1.0)");
-
-        // Thêm các cấu hình khác nếu cần
     }
 
-    // Phương thức để lấy đối tượng HttpClient duy nhất
     public static HttpClient GetHttpClient()
     {
         return _httpClient;
