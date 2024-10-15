@@ -1,26 +1,39 @@
-﻿using System;
-using System.Net.Http;
+﻿
+
 using System.Net.Http.Headers;
 
-public static class ApiFetch
+namespace Base.Context
 {
-    private static readonly HttpClient _httpClient;
-
-    static ApiFetch()
+    public class ApiFetch
     {
-        _httpClient = new HttpClient
+        private static readonly ApiFetch _instance = new ApiFetch();
+        private static readonly HttpClient _httpClient;
+
+        static ApiFetch()
         {
-            BaseAddress = new Uri("http://127.0.0.1:5173/api/v1"),
-            Timeout = TimeSpan.FromSeconds(30)
-        };
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("http://127.0.0.1:5173/api/v1"),
+                Timeout = TimeSpan.FromSeconds(30)
+            };
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+        }
 
-        _httpClient.DefaultRequestHeaders.Accept.Clear();
-        _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-    }
+        private ApiFetch() { }
 
-    public static HttpClient GetHttpClient()
-    {
-        return _httpClient;
+        public static ApiFetch Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
+        public HttpClient GetHttpClient()
+        {
+            return _httpClient;
+        }
     }
 }
