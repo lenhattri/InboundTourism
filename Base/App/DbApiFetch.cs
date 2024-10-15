@@ -4,12 +4,12 @@ using System.Net.Http.Headers;
 
 namespace Base.Context
 {
-    public class ApiFetch
+    public class DbApiFetch
     {
-        private static readonly ApiFetch _instance = new ApiFetch();
+        private static readonly DbApiFetch _instance = new DbApiFetch();
         private static readonly HttpClient _httpClient;
 
-        static ApiFetch()
+        static DbApiFetch()
         {
             _httpClient = new HttpClient
             {
@@ -21,9 +21,9 @@ namespace Base.Context
 
         }
 
-        private ApiFetch() { }
+        private DbApiFetch() { }
 
-        public static ApiFetch Instance
+        public static DbApiFetch Instance
         {
             get
             {
