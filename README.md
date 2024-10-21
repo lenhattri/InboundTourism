@@ -9,9 +9,7 @@
 - ASP.NET Core API
 - Entity Framework Core
 
-# Về thành viên
-- Lê Nhật Trí DPM225491
-- Huỳnh Trương Phát Đạt
+
 # Về cấu trúc
 
 - Core : Xác định các cấu trúc(khung) của các Thực thể(Từ đây gọi là Entity)
