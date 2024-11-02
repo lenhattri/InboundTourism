@@ -5,7 +5,7 @@
 
 # Về công nghệ
 
-- Winform .NET GUI
+- Winform .NET Core
 - ASP.NET Core API
 - Entity Framework Core
 
