@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Entities
 {
@@ -13,7 +11,9 @@ namespace Core.Entities
         public Guid VehicleID { get; set; }
         public DateTime USageStartTime { get; set; }
         public DateTime USageEndTime { get; set; }
+        //Set up timestamp
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
 
-        
     }
 }

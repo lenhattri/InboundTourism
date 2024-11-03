@@ -1,8 +1,6 @@
-﻿
+﻿using System.Net.Http.Headers;
 
-using System.Net.Http.Headers;
-
-namespace Base.Context
+namespace Base.Context.App
 {
     public class DbApiFetch
     {

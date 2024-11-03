@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,11 @@ namespace Core.Entities
 
 
         //Khóa ngoại
-        public ICollection<Trip> Trips { get; set; }
-        public ICollection<TourLocation> TourLocations { get; set; }
+        public ICollection<Trip>? Trips { get; set; }
+        public ICollection<TourLocation>? TourLocations { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 
 }

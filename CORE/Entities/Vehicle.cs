@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,10 @@ namespace Core.Entities
         public decimal VehiclePricing { get; set; }
         //Khóa ngoại
         public ICollection<Trip> Trips { get; set; }
+
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 
 }

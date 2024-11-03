@@ -21,6 +21,8 @@ namespace DAL
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
 
+        public DbSet<TripVehicle> TripVehicles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

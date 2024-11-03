@@ -1,18 +1,18 @@
-﻿# Về Dự án
+﻿# Dự án
 
 - Đây là một dự án xây dựng ứng dụng Winform .NET về quản lý tuyến du lịch với kiến trúc dựa trên mô hình 3 lớp kết hợp RESTful API. Sử dụng ASP.NET Core API và Entify Framework Core
 
 
-# Về công nghệ
+# Công nghệ
 
 - Winform .NET GUI
 - ASP.NET Core API
 - Entity Framework Core
 
-# Về thành viên
+# Thành viên
 - Lê Nhật Trí DPM225491
 - Huỳnh Trương Phát Đạt
-# Về cấu trúc
+# Cấu trúc dự án
 
 - Core : Xác định các cấu trúc(khung) của các Thực thể(Từ đây gọi là Entity)
 - DAL(Data Acccess Layer): Tầng này có nhiệm vụ ánh xạ các Entity trên SQL Server và có nhiệm vụ cung cấp phương thức kết nối thẳng tới Database
@@ -23,3 +23,6 @@
 
 ![Sơ đồ hệ thống](https://github.com/lenhattri/InboundTourism/blob/master/Sodo.png)
 
+# Cách cài đặt
+
+- 

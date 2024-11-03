@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,10 @@ namespace Core.Entities
         public string Country { get; set; }
 
         // Khóa ngoại
-        public ICollection<TourLocation> TourLocations { get; set; }
+        public ICollection<TourLocation>? TourLocations { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 
 }

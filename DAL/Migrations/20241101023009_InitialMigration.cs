@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,8 @@ namespace DAL.Migrations
                     LocationName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,11 +33,28 @@ namespace DAL.Migrations
                 {
                     TourID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TourName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tours", x => x.TourID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TripVehicles",
+                columns: table => new
+                {
+                    TripVehicleID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TripID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    VehicleID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    USageStartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    USageEndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TripVehicles", x => x.TripVehicleID);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,7 +67,8 @@ namespace DAL.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +83,8 @@ namespace DAL.Migrations
                     VehicleType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LicensePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacity = table.Column<int>(type: "int", nullable: false),
-                    VehiclePricing = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    VehiclePricing = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,7 +97,8 @@ namespace DAL.Migrations
                 {
                     TourID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LocationID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    VisitOrder = table.Column<int>(type: "int", nullable: false)
+                    VisitOrder = table.Column<int>(type: "int", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -106,7 +127,8 @@ namespace DAL.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Distance = table.Column<double>(type: "float", nullable: false),
-                    MaxGuests = table.Column<int>(type: "int", nullable: false)
+                    MaxGuests = table.Column<int>(type: "int", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -125,11 +147,11 @@ namespace DAL.Migrations
                 {
                     BookingID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TripID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NumberOfGuests = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -209,6 +231,9 @@ namespace DAL.Migrations
 
             migrationBuilder.DropTable(
                 name: "TripVehicle");
+
+            migrationBuilder.DropTable(
+                name: "TripVehicles");
 
             migrationBuilder.DropTable(
                 name: "Users");

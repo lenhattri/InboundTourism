@@ -1,6 +1,4 @@
-﻿
-
-namespace Utils.Context
+﻿namespace DAL.Repositories
 {
     public class UserContext
     {

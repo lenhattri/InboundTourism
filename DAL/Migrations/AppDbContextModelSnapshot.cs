@@ -31,11 +31,14 @@ namespace DAL.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("NumberOfGuests")
                         .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -77,6 +80,12 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.HasKey("LocationID");
 
                     b.ToTable("Locations");
@@ -91,6 +100,12 @@ namespace DAL.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<string>("TourName")
                         .IsRequired()
@@ -108,6 +123,12 @@ namespace DAL.Migrations
 
                     b.Property<Guid>("LocationID")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<int>("VisitOrder")
                         .HasColumnType("int");
@@ -137,6 +158,12 @@ namespace DAL.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -148,6 +175,35 @@ namespace DAL.Migrations
                     b.HasIndex("TourID");
 
                     b.ToTable("Trips");
+                });
+
+            modelBuilder.Entity("Core.Entities.TripVehicle", b =>
+                {
+                    b.Property<Guid>("TripVehicleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<Guid>("TripID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("USageEndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("USageStartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("VehicleID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TripVehicleID");
+
+                    b.ToTable("TripVehicles");
                 });
 
             modelBuilder.Entity("Core.Entities.User", b =>
@@ -179,6 +235,12 @@ namespace DAL.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
                     b.HasKey("UserID");
 
                     b.ToTable("Users");
@@ -196,6 +258,12 @@ namespace DAL.Migrations
                     b.Property<string>("LicensePlate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.Property<decimal>("VehiclePricing")
                         .HasColumnType("decimal(18,2)");

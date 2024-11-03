@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Core.Entities
 {
     public class TourLocation
@@ -11,6 +13,9 @@ namespace Core.Entities
         public Location Location { get; set; } // Khóa ngoại
 
         public int VisitOrder { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 
 }
