@@ -5,14 +5,10 @@
 
 # Công nghệ
 
-- Winform .NET GUI
+- Winform .NET Core
 - ASP.NET Core API
 - Entity Framework Core
 
-# Thành viên
-- Lê Nhật Trí DPM225491
-- Huỳnh Trương Phát Đạt
-# Cấu trúc dự án
 
 - Core : Xác định các cấu trúc(khung) của các Thực thể(Từ đây gọi là Entity)
 - DAL(Data Acccess Layer): Tầng này có nhiệm vụ ánh xạ các Entity trên SQL Server và có nhiệm vụ cung cấp phương thức kết nối thẳng tới Database
