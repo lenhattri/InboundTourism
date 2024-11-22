@@ -11,7 +11,7 @@ namespace Core.Entities
     {
         public Guid TripID { get; set; }
         public Guid TourID { get; set; }
-        public Tour Tour { get; set; }
+
         public decimal Price { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -19,11 +19,6 @@ namespace Core.Entities
         public double Distance {  get; set; }
         public int MaxGuests { get; set; }
 
-        public ICollection<Vehicle>? Vehicles { get; set; }
-        public ICollection<Booking>? Bookings { get; set; }
-
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
 
     }
 

@@ -12,17 +12,16 @@ namespace Core.Entities
         public Guid BookingID { get; set; }
 
         public Guid TripID { get; set; }
-        public Trip Trip { get; set; } //Khóa ngoại
+
 
         public Guid UserID { get; set; }
-        public User User { get; set; } //Khóa ngoại
+
 
         public DateTime BookingDate { get; set; }
         public int NumberOfGuests { get; set; }
         public decimal TotalPrice { get; set; }
 
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
+
     }
 
 }

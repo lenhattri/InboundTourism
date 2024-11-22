@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Base.Context.App;
 using Newtonsoft.Json;
 
 namespace Base.Utils.Fetch
@@ -10,17 +9,11 @@ namespace Base.Utils.Fetch
     public class FetchService
     {
         private static readonly Lazy<FetchService> _instance = new Lazy<FetchService>(() => new FetchService());
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient = new HttpClient();
 
-
-        private FetchService()
-        {
-            _httpClient = DbApiFetch.Instance.GetHttpClient();
-        }
-
+        private FetchService() { }
 
         public static FetchService Instance => _instance.Value;
-
 
         public async Task<T> GetAsync<T>(string endpoint)
         {
@@ -35,15 +28,16 @@ namespace Base.Utils.Fetch
                 }
                 else
                 {
-                    throw new Exception($"GET request failed with status code: {response.StatusCode}");
+                    Console.WriteLine($"GET thất bại với mã trạng thái: {response.StatusCode}");
+                    return default;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while fetching data.", ex);
+                Console.WriteLine($"Lỗi khi thực hiện GET: {ex.Message}");
+                return default;
             }
         }
-
 
         public async Task<T> PostAsync<T>(string endpoint, object data)
         {
@@ -61,15 +55,16 @@ namespace Base.Utils.Fetch
                 }
                 else
                 {
-                    throw new Exception($"POST request failed with status code: {response.StatusCode}");
+                    Console.WriteLine($"POST thất bại với mã trạng thái: {response.StatusCode}");
+                    return default;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while posting data.", ex);
+                Console.WriteLine($"Lỗi khi thực hiện POST: {ex.Message}");
+                return default;
             }
         }
-
 
         public async Task<T> PutAsync<T>(string endpoint, object data)
         {
@@ -87,15 +82,16 @@ namespace Base.Utils.Fetch
                 }
                 else
                 {
-                    throw new Exception($"PUT request failed with status code: {response.StatusCode}");
+                    Console.WriteLine($"PUT thất bại với mã trạng thái: {response.StatusCode}");
+                    return default;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while putting data.", ex);
+                Console.WriteLine($"Lỗi khi thực hiện PUT: {ex.Message}");
+                return default;
             }
         }
-
 
         public async Task<bool> DeleteAsync(string endpoint)
         {
@@ -109,14 +105,15 @@ namespace Base.Utils.Fetch
                 }
                 else
                 {
-                    throw new Exception($"DELETE request failed with status code: {response.StatusCode}");
+                    Console.WriteLine($"DELETE thất bại với mã trạng thái: {response.StatusCode}");
+                    return false;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("An error occurred while deleting data.", ex);
+                Console.WriteLine($"Lỗi khi thực hiện DELETE: {ex.Message}");
+                return false;
             }
-
         }
     }
 }

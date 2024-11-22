@@ -1,0 +1,10 @@
+﻿### Upload file
+POST http://localhost:5147/api/upload/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="827204.png"
+Content-Type: image/png
+
+< E:\Images\827204.png
+--boundary--

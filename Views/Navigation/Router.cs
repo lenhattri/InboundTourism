@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using Views.Interfaces;
 using Views.UserControls.Admin;
 using Views.UserControls.Navigation;
+using Views.UserControls.Changing;
+using Views.UserControls.Loading;
+using Views.UserControls.Auth;
 namespace Views.Navigation
 {
     public class Router
@@ -19,8 +18,21 @@ namespace Views.Navigation
 
         public void RegisterViews()
         {
+            //CRUD ADMIN
             _navigationService.RegisterView("Dashboard", () => new DashboardControl(_navigationService));
-            _navigationService.RegisterView("TableUser", () => new UserListControl());  
+            _navigationService.RegisterView("TableLocation", () => new LocationListControl(_navigationService));
+            _navigationService.RegisterView("ChangeLocation", () => new ChangeLocationControl());
+            _navigationService.RegisterView("TableTour", () => new TourListControl(_navigationService));
+            _navigationService.RegisterView("ChangeTour", () => new ChangeTourControl());
+            _navigationService.RegisterView("TableTrip", () => new TripListControl(_navigationService));
+            _navigationService.RegisterView("ChangeTrip", () => new ChangeTripControl());
+
+            //Authentication
+            _navigationService.RegisterView("Auth", () => new AuthControl(_navigationService));
+            _navigationService.RegisterView("Loading", () => new LoadingControl());
+            _navigationService.RegisterView("Register",() => new RegisterControl());
+            _navigationService.RegisterView("Login", () => new LoginControl());
+
         }
     }
 

@@ -1,13 +1,18 @@
 ﻿using Core.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace BLL.Interfaces
 {
     public interface ITourLocationService
     {
-        IEnumerable<TourLocation> GetTourLocations();
-        TourLocation GetTourLocation(Guid TourID, Guid LocationID);
-        void UpdateTourLocation(TourLocation tourLocation);
-        void DeleteTourLocation(Guid TourID, Guid LocationID);
+        IEnumerable<TourLocation> GetAllTourLocations();
+        TourLocation GetTourLocation(Guid tourId, Guid locationId);
         void AddTourLocation(TourLocation tourLocation);
+        void UpdateTourLocation(TourLocation tourLocation);
+        void DeleteTourLocation(Guid tourId, Guid locationId);
+        IEnumerable<TourLocation> FindByTourId(Guid tourId);
+        IEnumerable<TourLocation> FindByLocationId(Guid locationId);
     }
 }
+

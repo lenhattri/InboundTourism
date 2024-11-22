@@ -5,6 +5,7 @@ using Views.UserControls.Navigation;
 using Views.Navigation;
 using Views.UserControls.Admin;
 using Views.Interfaces;
+using System.Drawing.Drawing2D;
 
 namespace Views.Forms
 {
@@ -22,9 +23,13 @@ namespace Views.Forms
             Router router = new Router(_navigationService);
             router.RegisterViews();
 
-            _navigationService.NavigateTo("Dashboard");
+            _navigationService.NavigateTo("Loading");
 
         }
+
+        
+
+       
         private void btnTables_Click(object sender, EventArgs e)
         {
             _navigationService.NavigateTo("Dashboard");

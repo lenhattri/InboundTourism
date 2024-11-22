@@ -1,6 +1,8 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace BLL.Services
 {
@@ -13,14 +15,19 @@ namespace BLL.Services
             _tourLocationRepository = tourLocationRepository;
         }
 
-        public IEnumerable<TourLocation> GetTourLocations()
+        public IEnumerable<TourLocation> GetAllTourLocations()
         {
             return _tourLocationRepository.GetAll();
         }
 
-        public TourLocation GetTourLocation(Guid TourID, Guid LocationID)
+        public TourLocation GetTourLocation(Guid tourId, Guid locationId)
         {
-            return _tourLocationRepository.GetById(TourID, LocationID);
+            return _tourLocationRepository.GetByTourAndLocationId(tourId, locationId);
+        }
+
+        public void AddTourLocation(TourLocation tourLocation)
+        {
+            _tourLocationRepository.Add(tourLocation);
         }
 
         public void UpdateTourLocation(TourLocation tourLocation)
@@ -28,14 +35,19 @@ namespace BLL.Services
             _tourLocationRepository.Update(tourLocation);
         }
 
-        public void DeleteTourLocation(Guid TourID, Guid LocationID)
+        public void DeleteTourLocation(Guid tourId, Guid locationId)
         {
-            _tourLocationRepository.Delete(TourID,LocationID);
+            _tourLocationRepository.Delete(tourId, locationId);
         }
 
-        public void AddTourLocation(TourLocation tourLocation)
+        public IEnumerable<TourLocation> FindByTourId(Guid tourId)
         {
-            _tourLocationRepository.Add(tourLocation);
+            return _tourLocationRepository.FindByTourId(tourId);
+        }
+
+        public IEnumerable<TourLocation> FindByLocationId(Guid locationId)
+        {
+            return _tourLocationRepository.FindByLocationId(locationId);
         }
     }
 }

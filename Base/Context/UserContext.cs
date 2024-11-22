@@ -1,5 +1,7 @@
 ﻿
 
+using Core.Enums;
+
 namespace Base.Context
 {
     public class UserContext
@@ -8,9 +10,9 @@ namespace Base.Context
         private static UserContext _instance;
 
 
-        public string Username { get; private set; }
-        public string Role { get; private set; }
-        public string Email { get; private set; }
+        public string? Username { get; private set; } = null;
+        public Role? Role { get; private set; } = null;
+        public string? Email { get; private set; } = null;
 
 
         private UserContext() { }
@@ -29,7 +31,7 @@ namespace Base.Context
         }
 
 
-        public void SetUserData(string username, string role, string email)
+        public void SetUserData(string username, Role role, string email)
         {
             Username = username;
             Role = role;

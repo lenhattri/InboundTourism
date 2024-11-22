@@ -1,8 +1,7 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-
+using API.DTO;
 namespace API.Controllers
 {
     [Route(ApiPath)]
@@ -38,9 +37,16 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTour(Tour tour)
+        public ActionResult AddTour([FromBody] TourCreateRequest request)
         {
-            _tourService.AddTour(tour);
+            var tour = new Tour
+            {
+                TourID = Guid.NewGuid(),
+                TourName = request.TourName,
+                Description = request.Description
+            };
+
+            _tourService.AddTour(tour, request.LocationIds);
             return Ok();
         }
 

@@ -22,11 +22,18 @@ namespace Views.Navigation
             }
         }
 
-        public void NavigateTo(string viewKey)
+        public void NavigateTo(string viewKey, object parameter = null)
         {
             if (_views.TryGetValue(viewKey, out var viewFactory))
             {
                 var view = viewFactory();
+
+     
+                if (view is IParameterReceiver receiver)
+                {
+                    receiver.ReceiveParameter(parameter);
+                }
+
                 _panelContainer.Controls.Clear();
                 view.Dock = DockStyle.Fill;
                 _panelContainer.Controls.Add(view);
@@ -34,9 +41,10 @@ namespace Views.Navigation
             }
             else
             {
-                throw new ArgumentException($"Trang '{viewKey}' Không tồn tại.");
+                throw new Exception($"Trang '{viewKey}' không tồn tại.");
             }
         }
     }
+
 
 }

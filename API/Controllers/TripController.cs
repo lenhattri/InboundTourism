@@ -1,7 +1,6 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -25,9 +24,9 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Trip> GetTrip(Guid id)
+        public ActionResult<Trip> GetTripById(Guid id)
         {
-            var trip = _tripService.GetTrip(id);
+            var trip = _tripService.GetTripById(id);
 
             if (trip == null)
             {
@@ -62,5 +61,19 @@ namespace API.Controllers
             _tripService.DeleteTrip(id);
             return NoContent();
         }
+        [HttpGet("tour/{tourId}")]
+        public ActionResult<IEnumerable<Trip>> FindTripsByTourId(Guid tourId)
+        {
+            var trips = _tripService.FindTripsByTourId(tourId);
+
+            if (trips == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(trips);
+        }
+
+
     }
 }

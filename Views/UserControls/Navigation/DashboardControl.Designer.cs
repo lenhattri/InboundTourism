@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             btnUser = new Button();
+            btnTour = new Button();
+            btnLocation = new Button();
+            btnBooking = new Button();
+            btnTrip = new Button();
             SuspendLayout();
             // 
             // btnUser
@@ -43,18 +47,73 @@
             btnUser.UseVisualStyleBackColor = false;
             btnUser.Click += btnUser_Click;
             // 
-            // NavigationControl
+            // btnTour
+            // 
+            btnTour.BackColor = Color.Violet;
+            btnTour.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnTour.Location = new Point(123, 148);
+            btnTour.Name = "btnTour";
+            btnTour.Size = new Size(109, 47);
+            btnTour.TabIndex = 5;
+            btnTour.Text = "Tour";
+            btnTour.UseVisualStyleBackColor = false;
+            btnTour.Click += button1_Click;
+            // 
+            // btnLocation
+            // 
+            btnLocation.BackColor = Color.Violet;
+            btnLocation.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnLocation.Location = new Point(338, 86);
+            btnLocation.Name = "btnLocation";
+            btnLocation.Size = new Size(162, 47);
+            btnLocation.TabIndex = 6;
+            btnLocation.Text = "Điểm du lịch";
+            btnLocation.UseVisualStyleBackColor = false;
+            btnLocation.Click += btnLocation_Click;
+            // 
+            // btnBooking
+            // 
+            btnBooking.BackColor = Color.Violet;
+            btnBooking.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnBooking.Location = new Point(605, 86);
+            btnBooking.Name = "btnBooking";
+            btnBooking.Size = new Size(162, 47);
+            btnBooking.TabIndex = 7;
+            btnBooking.Text = "Vé";
+            btnBooking.UseVisualStyleBackColor = false;
+            // 
+            // btnTrip
+            // 
+            btnTrip.BackColor = Color.Violet;
+            btnTrip.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnTrip.Location = new Point(338, 148);
+            btnTrip.Name = "btnTrip";
+            btnTrip.Size = new Size(162, 47);
+            btnTrip.TabIndex = 8;
+            btnTrip.Text = "Chuyến đi";
+            btnTrip.UseVisualStyleBackColor = false;
+            // 
+            // DashboardControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnTrip);
+            Controls.Add(btnBooking);
+            Controls.Add(btnLocation);
+            Controls.Add(btnTour);
             Controls.Add(btnUser);
-            Name = "NavigationControl";
+            Name = "DashboardControl";
             Size = new Size(1091, 690);
+            Load += DashboardControl_Load;
             ResumeLayout(false);
         }
 
         #endregion
 
         private Button btnUser;
+        private Button btnTour;
+        private Button btnLocation;
+        private Button btnBooking;
+        private Button btnTrip;
     }
 }

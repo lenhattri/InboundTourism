@@ -1,41 +1,53 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
-
 using DAL.Interfaces;
+using System;
+using System.Collections.Generic;
+
 namespace BLL.Services
 {
     public class TripService : ITripService
     {
+        private readonly ITripRepository _tripRepository;
 
-        private readonly IGenericRepository<Trip> _tripRepository;
-        private readonly IGenericRepository<Booking> _BookingRepository;
-        public TripService(IGenericRepository<Trip> tripRepository)
+        public TripService(ITripRepository tripRepository)
         {
             _tripRepository = tripRepository;
         }
+
         public IEnumerable<Trip> GetTrips()
         {
             return _tripRepository.GetAll();
         }
-        public Trip GetTrip(Guid id)
+
+        public Trip GetTripById(Guid tripId)
         {
-            return _tripRepository.GetById(id);
+            return _tripRepository.GetById(tripId);
         }
 
-        public void UpdateTrip(Trip Trip)
+        public void AddTrip(Trip trip)
         {
-            _tripRepository.Update(Trip);
-        }
-        public void DeleteTrip(Guid id)
-        {
-            _tripRepository.Delete(id);
-        }
-        public void AddTrip(Trip Trip)
-        {
-            _tripRepository.Add(Trip);
-
+            _tripRepository.Add(trip);
         }
 
+        public void UpdateTrip(Trip trip)
+        {
+            _tripRepository.Update(trip);
+        }
 
+        public void DeleteTrip(Guid tripId)
+        {
+            _tripRepository.Delete(tripId);
+        }
+
+        public IEnumerable<Trip> FindTripsByTourId(Guid tourId)
+        {
+            return _tripRepository.FindByTourId(tourId);
+        }
+
+        public IEnumerable<Trip> FindTrips(DateTime? startDate = null, DateTime? endDate = null, decimal? maxPrice = null)
+        {
+            return _tripRepository.Find(startDate, endDate, maxPrice);
+        }
     }
 }

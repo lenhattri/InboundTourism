@@ -19,5 +19,20 @@ namespace Views.UserControls.Navigation
         {
             _navigationService.NavigateTo("TableUser");
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            _navigationService.NavigateTo("TableTour");
+        }
+
+        private void btnLocation_Click(object sender, EventArgs e)
+        {
+            _navigationService.NavigateTo("TableLocation");
+        }
+
+        private void DashboardControl_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,4 +1,4 @@
-using BLL.Interfaces;
+﻿using BLL.Interfaces;
 using BLL.Services;
 using Core.Entities;
 using DAL;
@@ -8,23 +8,24 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Add services to the container.
+// Đăng ký các service
 builder.Services.AddScoped<ITourService, TourService>();
 builder.Services.AddScoped<ITripService, TripService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<ITourLocationService, TourLocationService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-builder.Services.AddScoped<IGenericRepository<Tour>, GenericRepository<Tour>>();
-builder.Services.AddScoped<IGenericRepository<Trip>, GenericRepository<Trip>>();
-builder.Services.AddScoped<IGenericRepository<User>, GenericRepository<User>>();
-builder.Services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
-builder.Services.AddScoped<IGenericRepository<Booking>, GenericRepository<Booking>>();
+// Đăng ký các repository
+builder.Services.AddScoped<ITourRepository, TourRepository>();
+builder.Services.AddScoped<ITripRepository, TripRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<ITourLocationRepository, TourLocationRepository>();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

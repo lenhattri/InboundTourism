@@ -6,9 +6,9 @@ namespace BLL.Services
 {
     public class LocationService : ILocationService
     {
-        private readonly IGenericRepository<Location> _locationRepository;
+        private readonly ILocationRepository _locationRepository;
 
-        public LocationService(IGenericRepository<Location> locationRepository)
+        public LocationService(ILocationRepository locationRepository)
         {
             _locationRepository = locationRepository;
         }

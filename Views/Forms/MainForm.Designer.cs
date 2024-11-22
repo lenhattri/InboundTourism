@@ -40,7 +40,7 @@
             panelContainer.BackColor = Color.Lavender;
             panelContainer.Location = new Point(246, 0);
             panelContainer.Name = "panelContainer";
-            panelContainer.Size = new Size(960, 698);
+            panelContainer.Size = new Size(1514, 921);
             panelContainer.TabIndex = 0;
             panelContainer.Paint += panelContainer_Paint;
             // 
@@ -58,11 +58,11 @@
             // 
             btnTables.BackColor = Color.Violet;
             btnTables.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnTables.Location = new Point(50, 255);
+            btnTables.Location = new Point(36, 256);
             btnTables.Name = "btnTables";
-            btnTables.Size = new Size(109, 47);
+            btnTables.Size = new Size(133, 53);
             btnTables.TabIndex = 2;
-            btnTables.Text = "Các bảng";
+            btnTables.Text = "☰ Các bảng";
             btnTables.UseVisualStyleBackColor = false;
             btnTables.Click += btnTables_Click;
             // 
@@ -71,7 +71,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateBlue;
-            ClientSize = new Size(1203, 697);
+            ClientSize = new Size(1759, 920);
             Controls.Add(btnTables);
             Controls.Add(pictureBox1);
             Controls.Add(panelContainer);

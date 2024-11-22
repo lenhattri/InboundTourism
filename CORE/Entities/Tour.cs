@@ -9,18 +9,11 @@ namespace Core.Entities
 {
     public class Tour
     {
-        public Guid TourID { get; set; } //Khóa ngoại
+        public Guid TourID { get; set; }
         public string TourName { get; set; }
         public string Description { get; set; }
-        //public decimal BasePrice { get; set; }
 
-
-        //Khóa ngoại
-        public ICollection<Trip>? Trips { get; set; }
-        public ICollection<TourLocation>? TourLocations { get; set; }
-
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
     }
+
 
 }

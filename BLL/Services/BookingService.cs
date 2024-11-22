@@ -1,14 +1,16 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace BLL.Services
 {
     public class BookingService : IBookingService
     {
-        private readonly IGenericRepository<Booking> _bookingRepository;
+        private readonly IBookingRepository _bookingRepository;
 
-        public BookingService(IGenericRepository<Booking> bookingRepository)
+        public BookingService(IBookingRepository bookingRepository)
         {
             _bookingRepository = bookingRepository;
         }
@@ -18,9 +20,14 @@ namespace BLL.Services
             return _bookingRepository.GetAll();
         }
 
-        public Booking GetBooking(Guid id)
+        public Booking GetBookingById(Guid bookingId)
         {
-            return _bookingRepository.GetById(id);
+            return _bookingRepository.GetById(bookingId);
+        }
+
+        public void AddBooking(Booking booking)
+        {
+            _bookingRepository.Add(booking);
         }
 
         public void UpdateBooking(Booking booking)
@@ -28,14 +35,24 @@ namespace BLL.Services
             _bookingRepository.Update(booking);
         }
 
-        public void DeleteBooking(Guid id)
+        public void DeleteBooking(Guid bookingId)
         {
-            _bookingRepository.Delete(id);
+            _bookingRepository.Delete(bookingId);
         }
 
-        public void AddBooking(Booking booking)
+        public IEnumerable<Booking> FindBookingsByUserId(Guid userId)
         {
-            _bookingRepository.Add(booking);
+            return _bookingRepository.FindByUserId(userId);
+        }
+
+        public IEnumerable<Booking> FindBookingsByTripId(Guid tripId)
+        {
+            return _bookingRepository.FindByTripId(tripId);
+        }
+
+        public IEnumerable<Booking> FindBookings(DateTime? startDate = null, DateTime? endDate = null)
+        {
+            return _bookingRepository.Find(startDate, endDate);
         }
     }
 }

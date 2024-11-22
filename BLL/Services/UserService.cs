@@ -1,14 +1,16 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        private readonly IGenericRepository<User> _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IGenericRepository<User> userRepository)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -18,9 +20,19 @@ namespace BLL.Services
             return _userRepository.GetAll();
         }
 
-        public User GetUser(Guid id)
+        public User GetUserById(Guid userId)
         {
-            return _userRepository.GetById(id);
+            return _userRepository.GetById(userId);
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return _userRepository.GetByEmail(email);
+        }
+
+        public void AddUser(User user)
+        {
+            _userRepository.Add(user);
         }
 
         public void UpdateUser(User user)
@@ -28,14 +40,14 @@ namespace BLL.Services
             _userRepository.Update(user);
         }
 
-        public void DeleteUser(Guid id)
+        public void DeleteUser(Guid userId)
         {
-            _userRepository.Delete(id);
+            _userRepository.Delete(userId);
         }
 
-        public void AddUser(User user)
+        public IEnumerable<User> FindUsers(string fullName = null, string email = null, string phoneNumber = null)
         {
-            _userRepository.Add(user);
+            return _userRepository.Find(fullName, email, phoneNumber);
         }
     }
 }

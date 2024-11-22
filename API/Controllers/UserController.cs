@@ -1,7 +1,6 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -25,9 +24,9 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(Guid id)
+        public ActionResult<User> GetUserById(Guid id)
         {
-            var user = _userService.GetUser(id);
+            var user = _userService.GetUserById(id);
 
             if (user == null)
             {

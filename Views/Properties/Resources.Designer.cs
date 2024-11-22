@@ -59,5 +59,15 @@ namespace Views.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _物語シリーズ_まよいキャンディー___TosTosのイラスト___pixiv {
+            get {
+                object obj = ResourceManager.GetObject("#物語シリーズ まよいキャンディー - TosTosのイラスト - pixiv", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Views.Interfaces
 {
     public interface INavigationService
     {
-        void NavigateTo(string viewKey);
+        void NavigateTo(string viewKey, object parameter = null);
         void RegisterView(string key, Func<UserControl> viewFactory);
     }
 

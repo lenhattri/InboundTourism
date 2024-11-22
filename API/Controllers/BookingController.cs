@@ -1,7 +1,8 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
-
+using System;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -25,9 +26,9 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Booking> GetBooking(Guid id)
+        public ActionResult<Booking> GetBookingById(Guid id)
         {
-            var booking = _bookingService.GetBooking(id);
+            var booking = _bookingService.GetBookingById(id);
 
             if (booking == null)
             {
@@ -61,6 +62,47 @@ namespace API.Controllers
         {
             _bookingService.DeleteBooking(id);
             return NoContent();
+        }
+
+    
+        [HttpGet("user/{userId}")]
+        public ActionResult<IEnumerable<Booking>> FindBookingsByUserId(Guid userId)
+        {
+            var bookings = _bookingService.FindBookingsByUserId(userId);
+
+            if (bookings == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(bookings);
+        }
+
+       
+        [HttpGet("trip/{tripId}")]
+        public ActionResult<IEnumerable<Booking>> FindBookingsByTripId(Guid tripId)
+        {
+            var bookings = _bookingService.FindBookingsByTripId(tripId);
+
+            if (bookings == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(bookings);
+        }
+
+        [HttpGet("date")]
+        public ActionResult<IEnumerable<Booking>> FindBookings([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
+        {
+            var bookings = _bookingService.FindBookings(startDate, endDate);
+
+            if (bookings == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(bookings);
         }
     }
 }

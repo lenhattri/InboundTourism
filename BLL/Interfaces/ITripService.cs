@@ -1,16 +1,17 @@
 ﻿using Core.Entities;
-
+using System;
+using System.Collections.Generic;
 
 namespace BLL.Interfaces
 {
     public interface ITripService
     {
-        public IEnumerable<Trip> GetTrips();
-        public Trip GetTrip(Guid id);
-
-        public void UpdateTrip(Trip Trip);
-        public void DeleteTrip(Guid id);
-        public void AddTrip(Trip Trip);
-
+        IEnumerable<Trip> GetTrips();
+        Trip GetTripById(Guid tripId);
+        void AddTrip(Trip trip);
+        void UpdateTrip(Trip trip);
+        void DeleteTrip(Guid tripId);
+        IEnumerable<Trip> FindTripsByTourId(Guid tourId);
+        IEnumerable<Trip> FindTrips(DateTime? startDate = null, DateTime? endDate = null, decimal? maxPrice = null);
     }
 }

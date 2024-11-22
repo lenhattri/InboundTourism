@@ -1,6 +1,19 @@
-@API_HostAddress = http://localhost:5173
+﻿@API_HostAddress = http://localhost:5173
 
-GET {{API_HostAddress}}/api/v1/tour
+# Lấy tất cả Locations
+GET {{API_HostAddress}}/api/v1/location
 Accept: application/json
 
 ###
+
+# Thêm một Location mới
+POST {{API_HostAddress}}/api/v1/location
+Content-Type: application/json
+Accept: application/json
+
+{
+    "locationName": "Ha Noi View",
+    "description": "A breathtaking view of the mountain range.",
+    "country":"Viet Nam",
+    "city": "Denver"
+}
