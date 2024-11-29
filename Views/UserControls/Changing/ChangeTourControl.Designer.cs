@@ -37,6 +37,8 @@
             listView1 = new ListView();
             colID = new ColumnHeader();
             colName = new ColumnHeader();
+            label3 = new Label();
+            txtLocationFilter = new TextBox();
             SuspendLayout();
             // 
             // btnAdd
@@ -44,7 +46,7 @@
             btnAdd.BackColor = Color.LightGreen;
             btnAdd.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAdd.ForeColor = SystemColors.Desktop;
-            btnAdd.Location = new Point(111, 362);
+            btnAdd.Location = new Point(53, 362);
             btnAdd.Margin = new Padding(4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(149, 56);
@@ -57,7 +59,7 @@
             btnChange.BackColor = Color.SkyBlue;
             btnChange.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnChange.ForeColor = SystemColors.Desktop;
-            btnChange.Location = new Point(111, 362);
+            btnChange.Location = new Point(53, 362);
             btnChange.Margin = new Padding(4);
             btnChange.Name = "btnChange";
             btnChange.Size = new Size(149, 56);
@@ -68,7 +70,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(111, 67);
+            label1.Location = new Point(53, 165);
             label1.Name = "label1";
             label1.Size = new Size(63, 20);
             label1.TabIndex = 11;
@@ -76,7 +78,7 @@
             // 
             // txtTourName
             // 
-            txtTourName.Location = new Point(221, 60);
+            txtTourName.Location = new Point(163, 158);
             txtTourName.Name = "txtTourName";
             txtTourName.Size = new Size(354, 27);
             txtTourName.TabIndex = 10;
@@ -84,7 +86,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(111, 125);
+            label2.Location = new Point(53, 223);
             label2.Name = "label2";
             label2.Size = new Size(48, 20);
             label2.TabIndex = 21;
@@ -92,7 +94,7 @@
             // 
             // txtDescription
             // 
-            txtDescription.Location = new Point(221, 118);
+            txtDescription.Location = new Point(163, 216);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(354, 27);
             txtDescription.TabIndex = 20;
@@ -100,16 +102,34 @@
             // listView1
             // 
             listView1.Columns.AddRange(new ColumnHeader[] { colID, colName });
-            listView1.Location = new Point(110, 182);
+            listView1.Location = new Point(572, 158);
             listView1.Name = "listView1";
-            listView1.Size = new Size(583, 145);
+            listView1.Size = new Size(405, 298);
             listView1.TabIndex = 22;
             listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(572, 124);
+            label3.Name = "label3";
+            label3.Size = new Size(96, 20);
+            label3.TabIndex = 23;
+            label3.Text = "Các địa điểm";
+            // 
+            // txtLocationFilter
+            // 
+            txtLocationFilter.Location = new Point(674, 117);
+            txtLocationFilter.Name = "txtLocationFilter";
+            txtLocationFilter.Size = new Size(250, 27);
+            txtLocationFilter.TabIndex = 30;
             // 
             // ChangeTourControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(txtLocationFilter);
+            Controls.Add(label3);
             Controls.Add(listView1);
             Controls.Add(label2);
             Controls.Add(txtDescription);
@@ -118,7 +138,7 @@
             Controls.Add(label1);
             Controls.Add(txtTourName);
             Name = "ChangeTourControl";
-            Size = new Size(1053, 699);
+            Size = new Size(1053, 589);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -137,5 +157,7 @@
         private ListView listView2;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
+        private Label label3;
+        private TextBox txtLocationFilter;
     }
 }

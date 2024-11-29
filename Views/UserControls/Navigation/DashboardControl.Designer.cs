@@ -81,6 +81,7 @@
             btnBooking.TabIndex = 7;
             btnBooking.Text = "Vé";
             btnBooking.UseVisualStyleBackColor = false;
+            btnBooking.Click += btnBooking_Click;
             // 
             // btnTrip
             // 

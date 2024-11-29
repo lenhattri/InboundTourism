@@ -16,14 +16,17 @@ namespace Views.UserControls.Changing
             InitializeComponent();
 
             listView1.CheckBoxes = false;
-            listView1.FullRowSelect = true; 
-            listView1.HideSelection = false; 
+            listView1.FullRowSelect = true;
+            listView1.HideSelection = false;
             btnAdd.Click += async (sender, e) => await AddTripAsync();
             btnChange.Click += async (sender, e) => await UpdateTripAsync();
             btnChange.Visible = false;
             btnAdd.Visible = false;
 
             listView1.SelectedIndexChanged += OnTourSelected;
+
+            // Kết nối sự kiện lọc với txtTourFilter
+            txtTourFilter.TextChanged += (sender, e) => FilterTours();
         }
 
         public async void ReceiveParameter(object parameter)
@@ -47,7 +50,7 @@ namespace Views.UserControls.Changing
             }
 
             await LoadAllToursAsync();
-            PopulateListView();
+            PopulateListView(_allTours);
         }
 
         private async Task LoadAllToursAsync()
@@ -71,16 +74,16 @@ namespace Views.UserControls.Changing
             }
         }
 
-        private void PopulateListView()
+        private void PopulateListView(List<Tour> tours)
         {
-            listView1.Clear(); 
+            listView1.Items.Clear();
+            listView1.Columns.Clear();
 
-            
             listView1.Columns.Add("Tên Tour", 200);
             listView1.Columns.Add("Mô tả", 300);
             listView1.Columns.Add("Mã Tour", 150);
 
-            foreach (var tour in _allTours)
+            foreach (var tour in tours)
             {
                 var item = new ListViewItem(tour.TourName)
                 {
@@ -97,16 +100,28 @@ namespace Views.UserControls.Changing
                 listView1.Items.Add(item);
             }
 
-            
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
 
+        private void FilterTours()
+        {
+            var keyword = txtTourFilter.Text.ToLower();
+
+            // Lọc danh sách tour dựa trên từ khóa
+            var filteredTours = _allTours.Where(tour =>
+                tour.TourName.ToLower().Contains(keyword) ||
+                tour.Description.ToLower().Contains(keyword) ||
+                tour.TourID.ToString().ToLower().Contains(keyword)
+            ).ToList();
+
+            PopulateListView(filteredTours); // Hiển thị danh sách đã lọc
+        }
 
         private void OnTourSelected(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                _tourId = (Guid)listView1.SelectedItems[0].Tag; // Lấy `TourID` từ Tag
+                _tourId = (Guid)listView1.SelectedItems[0].Tag;
                 MessageBox.Show($"Bạn đã chọn Tour: {listView1.SelectedItems[0].Text}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -221,5 +236,8 @@ namespace Views.UserControls.Changing
             return true;
         }
 
+        private void ChangeTripControl_Load(object sender, EventArgs e)
+        {
+        }
     }
 }

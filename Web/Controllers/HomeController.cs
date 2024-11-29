@@ -23,47 +23,27 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Check if there's a booking confirmation to display
+          
             if (TempData["BookingID"] != null)
             {
-                var bookingId = Guid.Parse(TempData["BookingID"].ToString());
-
-                // Fetch booking details
-                var bookingResponse = await FetchService.Instance.GetAsync<Booking>($"{GlobalConfig.BASE_URL}/booking/{bookingId}");
-                if (bookingResponse.Success)
-                {
-                    var booking = bookingResponse.Data;
-
-                    // Fetch trip details
-                    var tripResponse = await FetchService.Instance.GetAsync<Trip>($"{GlobalConfig.BASE_URL}/trip/{booking.TripID}");
-                    var trip = tripResponse.Data;
-
-                    // Fetch tour details
-                    var tourResponse = await FetchService.Instance.GetAsync<Tour>($"{GlobalConfig.BASE_URL}/tour/{trip.TourID}");
-                    var tour = tourResponse.Data;
-
-                    ViewBag.Booking = booking;
-                    ViewBag.Trip = trip;
-                    ViewBag.Tour = tour;
-
-                    // Set a flag to indicate that booking confirmation should be displayed
+                 
                     ViewBag.ShowBookingConfirmation = true;
-                }
+                
             }
 
-            // Fetch the list of Tours
+         
             var response = await FetchService.Instance.GetAsync<List<Tour>>($"{GlobalConfig.BASE_URL}/tour");
 
             if (response.Success)
             {
                 var tours = response.Data;
 
-                // For each tour, fetch its locations
+                
                 var tourWithLocationsList = new List<TourWithLocations>();
 
                 foreach (var tour in tours)
                 {
-                    // Fetch TourLocations for the Tour
+                    
                     var tourLocationsResponse = await FetchService.Instance.GetAsync<List<TourLocation>>($"{GlobalConfig.BASE_URL}/tourlocation/tour/{tour.TourID}");
                     List<Location> locations = new List<Location>();
 
@@ -71,7 +51,7 @@ namespace Web.Controllers
                     {
                         var tourLocations = tourLocationsResponse.Data;
 
-                        // Fetch Location details for each TourLocation
+                       
                         foreach (var tourLocation in tourLocations)
                         {
                             var locationResponse = await FetchService.Instance.GetAsync<Location>($"{GlobalConfig.BASE_URL}/location/{tourLocation.LocationID}");
@@ -82,7 +62,7 @@ namespace Web.Controllers
                         }
                     }
 
-                    // Create a TourWithLocations object
+                  
                     var tourWithLocations = new TourWithLocations
                     {
                         Tour = tour,
@@ -92,7 +72,7 @@ namespace Web.Controllers
                     tourWithLocationsList.Add(tourWithLocations);
                 }
 
-                // Pass the tours with locations to the view
+                
                 return View(tourWithLocationsList);
             }
 

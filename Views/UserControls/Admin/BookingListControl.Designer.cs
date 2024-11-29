@@ -47,6 +47,7 @@
             btnDelete.TabIndex = 16;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnChange
             // 
@@ -60,6 +61,7 @@
             btnChange.TabIndex = 15;
             btnChange.Text = "Sửa";
             btnChange.UseVisualStyleBackColor = false;
+            btnChange.Click += btnChange_Click;
             // 
             // dataGridView1
             // 
@@ -97,6 +99,7 @@
             btnAdd.TabIndex = 13;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
             // BookingListControl
             // 
@@ -108,6 +111,7 @@
             Controls.Add(btnAdd);
             Name = "BookingListControl";
             Size = new Size(1314, 727);
+            Load += BookingListControl_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }

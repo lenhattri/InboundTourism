@@ -22,16 +22,17 @@ namespace Views.UserControls.Admin
             dataGridView1.RowHeadersVisible = false;
         }
 
-        private void TripListControl_Load(object sender, EventArgs e)
+        private async void TripListControl_Load(object sender, EventArgs e)
         {
             InitializeColumns();
-            LoadTripsAsync();
+            await LoadTripsAsync();
         }
 
         private void InitializeColumns()
         {
             dataGridView1.AutoGenerateColumns = false;
 
+            AddTextBoxColumn("Tên chuyến đi", "TourName"); 
             AddTextBoxColumn("Giá", "Price");
             AddTextBoxColumn("Ngày bắt đầu", "StartDate");
             AddTextBoxColumn("Ngày kết thúc", "EndDate");
@@ -58,6 +59,7 @@ namespace Views.UserControls.Admin
 
                 if (response.Success)
                 {
+                
                     dataGridView1.DataSource = response.Data;
                 }
                 else
@@ -73,7 +75,7 @@ namespace Views.UserControls.Admin
 
         private async Task DeleteTripAsync(Guid tripId)
         {
-            var confirmDelete = MessageBox.Show("Bạn có chắc chắn muốn xóa trip này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var confirmDelete = MessageBox.Show("Bạn có chắc chắn muốn xóa chuyến đi này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirmDelete == DialogResult.Yes)
             {
                 try
@@ -83,11 +85,11 @@ namespace Views.UserControls.Admin
                     if (response.Success)
                     {
                         await LoadTripsAsync();
-                        MessageBox.Show("Trip đã được xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Chuyến đi đã được xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
-                        MessageBox.Show($"Lỗi khi xóa trip: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"Lỗi khi xóa chuyến đi: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 catch (Exception ex)
@@ -115,7 +117,7 @@ namespace Views.UserControls.Admin
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0) return;
 
@@ -124,7 +126,7 @@ namespace Views.UserControls.Admin
 
             if (trip != null)
             {
-                DeleteTripAsync(trip.TripID);
+                await DeleteTripAsync(trip.TripID);
             }
         }
     }

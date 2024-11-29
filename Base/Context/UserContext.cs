@@ -41,7 +41,7 @@ namespace Base.Context
 
         public void ClearUserData()
         {
-            Username = null;
+            Username = "";
             Role = null;
             Email = null;
         }

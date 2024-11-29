@@ -55,7 +55,7 @@ namespace Views.UserControls.Auth
                     var userRole = response.Data.Role; // Assuming the role is returned as part of the response
 
                     // Set user data in the context
-                    UserContext.Instance.SetUserData(email, userRole, email);
+                    UserContext.Instance.SetUserData(response.Data.FullName, userRole, email);
 
                     // Open the appropriate form based on user role
                     if (userRole == Role.Customer)

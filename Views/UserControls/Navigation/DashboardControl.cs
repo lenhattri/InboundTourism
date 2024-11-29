@@ -37,5 +37,10 @@ namespace Views.UserControls.Navigation
         {
             _navigationService.NavigateTo("TableTrip");
         }
+
+        private void btnBooking_Click(object sender, EventArgs e)
+        {
+            _navigationService.NavigateTo("TableBooking");
+        }
     }
 }

@@ -42,7 +42,7 @@
             // 
             // txtLocationName
             // 
-            txtLocationName.Location = new Point(153, 108);
+            txtLocationName.Location = new Point(142, 48);
             txtLocationName.Name = "txtLocationName";
             txtLocationName.Size = new Size(354, 27);
             txtLocationName.TabIndex = 0;
@@ -50,7 +50,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(43, 115);
+            label1.Location = new Point(32, 55);
             label1.Name = "label1";
             label1.Size = new Size(95, 20);
             label1.TabIndex = 1;
@@ -59,7 +59,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(43, 195);
+            label2.Location = new Point(32, 135);
             label2.Name = "label2";
             label2.Size = new Size(48, 20);
             label2.TabIndex = 3;
@@ -67,7 +67,7 @@
             // 
             // txtDescription
             // 
-            txtDescription.Location = new Point(153, 192);
+            txtDescription.Location = new Point(142, 132);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(354, 27);
             txtDescription.TabIndex = 2;
@@ -75,7 +75,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(43, 275);
+            label3.Location = new Point(32, 215);
             label3.Name = "label3";
             label3.Size = new Size(103, 20);
             label3.TabIndex = 5;
@@ -83,7 +83,7 @@
             // 
             // txtCity
             // 
-            txtCity.Location = new Point(153, 272);
+            txtCity.Location = new Point(142, 212);
             txtCity.Name = "txtCity";
             txtCity.Size = new Size(354, 27);
             txtCity.TabIndex = 4;
@@ -91,7 +91,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(43, 363);
+            label4.Location = new Point(32, 303);
             label4.Name = "label4";
             label4.Size = new Size(69, 20);
             label4.TabIndex = 7;
@@ -99,7 +99,7 @@
             // 
             // txtCountry
             // 
-            txtCountry.Location = new Point(153, 360);
+            txtCountry.Location = new Point(142, 300);
             txtCountry.Name = "txtCountry";
             txtCountry.Size = new Size(354, 27);
             txtCountry.TabIndex = 6;
@@ -109,7 +109,7 @@
             btnChange.BackColor = Color.SkyBlue;
             btnChange.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnChange.ForeColor = SystemColors.Desktop;
-            btnChange.Location = new Point(43, 443);
+            btnChange.Location = new Point(32, 383);
             btnChange.Margin = new Padding(4);
             btnChange.Name = "btnChange";
             btnChange.Size = new Size(149, 56);
@@ -122,14 +122,13 @@
             btnAdd.BackColor = Color.LightGreen;
             btnAdd.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAdd.ForeColor = SystemColors.Desktop;
-            btnAdd.Location = new Point(43, 443);
+            btnAdd.Location = new Point(32, 383);
             btnAdd.Margin = new Padding(4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(149, 56);
             btnAdd.TabIndex = 9;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = false;
-         
             // 
             // ChangeLocationControl
             // 
@@ -146,7 +145,7 @@
             Controls.Add(label1);
             Controls.Add(txtLocationName);
             Name = "ChangeLocationControl";
-            Size = new Size(1211, 667);
+            Size = new Size(576, 494);
             Load += ChangeLocationControl_Load;
             ResumeLayout(false);
             PerformLayout();

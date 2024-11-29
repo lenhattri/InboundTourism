@@ -2,18 +2,19 @@
 using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
-using System;
-using System.Collections.Generic;
+
 
 namespace BLL.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IBookingService _bookingService;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IBookingService bookingService)
         {
             _userRepository = userRepository;
+            _bookingService = bookingService;
         }
 
         public IEnumerable<User> GetUsers()
@@ -80,6 +81,16 @@ namespace BLL.Services
 
         public void DeleteUser(Guid userId)
         {
+            // Tìm tất cả các booking của user
+            var userBookings = _bookingService.FindBookingsByUserId(userId);
+
+            // Xóa tất cả các booking liên quan đến user
+            foreach (var booking in userBookings)
+            {
+                _bookingService.DeleteBooking(booking.BookingID);
+            }
+
+            // Sau khi xóa hết booking, tiến hành xóa user
             _userRepository.Delete(userId);
         }
 

@@ -5,6 +5,7 @@ using Views.UserControls.Navigation;
 using Views.UserControls.Changing;
 using Views.UserControls.Loading;
 using Views.UserControls.Auth;
+
 namespace Views.Navigation
 {
     public class Router
@@ -28,6 +29,8 @@ namespace Views.Navigation
             _navigationService.RegisterView("ChangeTrip", () => new ChangeTripControl());
             _navigationService.RegisterView("TableUser", () => new UserListControl(_navigationService));
             _navigationService.RegisterView("ChangeUser",() => new ChangeUserControl());
+            _navigationService.RegisterView("TableBooking", () => new BookingListControl(_navigationService));
+            _navigationService.RegisterView("ChangeBooking", () => new ChangeBookingControl());
             //Authentication
             _navigationService.RegisterView("Auth", () => new AuthControl(_navigationService));
             _navigationService.RegisterView("Loading", () => new LoadingControl());

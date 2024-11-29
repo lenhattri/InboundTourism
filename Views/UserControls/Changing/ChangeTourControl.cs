@@ -1,5 +1,4 @@
-﻿
-using Views.Interfaces;
+﻿using Views.Interfaces;
 using Core.Entities;
 using Base.Utils.Fetch;
 using Base.Config;
@@ -22,6 +21,9 @@ namespace Views.UserControls.Changing
             btnChange.Click += async (sender, e) => await UpdateTourAsync();
             btnChange.Visible = false;
             btnAdd.Visible = false;
+
+            // Sự kiện lọc theo từ khóa
+            txtLocationFilter.TextChanged += (sender, e) => FilterLocations();
         }
 
         public async void ReceiveParameter(object parameter)
@@ -35,23 +37,18 @@ namespace Views.UserControls.Changing
                 txtDescription.Text = tour.Description;
                 btnChange.Visible = true;
                 btnAdd.Visible = false;
-              
+
                 await LoadSelectedLocationsAsync();
-               
             }
             else
             {
-
                 btnAdd.Visible = true;
                 btnChange.Visible = false;
-                
             }
 
             await LoadAllLocationsAsync();
-            PopulateListView();
+            PopulateListView(_allLocations); // Hiển thị tất cả địa điểm ban đầu
         }
-
-   
 
         private async Task LoadAllLocationsAsync()
         {
@@ -95,11 +92,11 @@ namespace Views.UserControls.Changing
             }
         }
 
-        private void PopulateListView()
+        private void PopulateListView(List<Location> locations)
         {
             listView1.Items.Clear();
 
-            foreach (var location in _allLocations)
+            foreach (var location in locations)
             {
                 var item = new ListViewItem(location.LocationName)
                 {
@@ -108,6 +105,18 @@ namespace Views.UserControls.Changing
                 };
                 listView1.Items.Add(item);
             }
+        }
+
+        private void FilterLocations()
+        {
+            var keyword = txtLocationFilter.Text.ToLower();
+
+            // Lọc danh sách địa điểm dựa trên từ khóa
+            var filteredLocations = _allLocations.Where(location =>
+                location.LocationName.ToLower().Contains(keyword)
+            ).ToList();
+
+            PopulateListView(filteredLocations); // Cập nhật danh sách hiển thị
         }
 
         private List<Guid> GetSelectedLocationIds()

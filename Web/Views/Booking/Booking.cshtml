@@ -6,32 +6,47 @@
     ViewData["Title"] = "Đặt chỗ";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Đặt chỗ cho chuyến đi</h1>
+<div class="container py-5">
+    <h1 class="display-4 text-center text-pink">Đặt chỗ cho chuyến đi</h1>
 
-    <h2>Thông tin Tour</h2>
-    <p><strong>Tên Tour:</strong> @tour.TourName</p>
-    <p><strong>Mô tả:</strong> @tour.Description</p>
+    <!-- Thông tin Tour -->
+    <div class="card my-4 shadow-sm">
+        <div class="card-body">
+            <h2 class="text-pink">Thông tin Tour</h2>
+            <p><strong>Tên Tour:</strong> @tour.TourName</p>
+            <p><strong>Mô tả:</strong> @tour.Description</p>
+        </div>
+    </div>
 
-    <h2>Các điểm đến trong Tour</h2>
-    <ul>
-        @foreach (var location in locations)
-        {
-            <li><strong>@location.LocationName:</strong> @location.Description</li>
-        }
-    </ul>
+    <!-- Các điểm đến -->
+    <div class="card my-4 shadow-sm">
+        <div class="card-body">
+            <h2 class="text-pink">Các điểm đến trong Tour</h2>
+            <ul>
+                @foreach (var location in locations)
+                {
+                    <li><strong>@location.LocationName:</strong> @location.Description</li>
+                }
+            </ul>
+        </div>
+    </div>
 
-    <h2>Chi tiết Chuyến đi</h2>
-    <p><strong>Giá vé:</strong> @trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>
-    <p><strong>Thời gian:</strong> @trip.StartDate.ToShortDateString() - @trip.EndDate.ToShortDateString()</p>
-    <p><strong>Khoảng cách:</strong> @trip.Distance km</p>
-    <p><strong>Số khách tối đa:</strong> @trip.MaxGuests</p>
-    <p><strong>Số vé đã đặt:</strong> @ViewBag.TotalBookedGuests/@trip.MaxGuests</p>
+    <!-- Chi tiết chuyến đi -->
+    <div class="card my-4 shadow-sm">
+        <div class="card-body">
+            <h2 class="text-pink">Chi tiết Chuyến đi</h2>
+            <p><strong>Giá vé:</strong> @trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>
+            <p><strong>Thời gian:</strong> @trip.StartDate.ToShortDateString() - @trip.EndDate.ToShortDateString()</p>
+            <p><strong>Khoảng cách:</strong> @trip.Distance km</p>
+            <p><strong>Số khách tối đa:</strong> @trip.MaxGuests</p>
+            <p><strong>Số vé đã đặt:</strong> @ViewBag.TotalBookedGuests/@trip.MaxGuests</p>
+        </div>
+    </div>
 
-    <!-- Hiển thị thông báo lỗi nếu có -->
+    <!-- Thông báo lỗi -->
     @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage) || !ViewData.ModelState.IsValid)
     {
-        <div class="alert alert-danger mt-3">
+        <div class="alert alert-danger">
             <strong>Đã xảy ra lỗi:</strong>
             <ul>
                 @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
@@ -53,20 +68,20 @@
     }
 
     <!-- Form đặt chỗ -->
-    <form method="post" onsubmit="return confirmBooking();">
+    <form method="post" class="card my-4 p-4 shadow-sm" onsubmit="return confirmBooking();">
         <input type="hidden" asp-for="TripID" value="@trip.TripID" />
-        <div class="form-group">
-            <label>Số lượng vé:</label>
-            <input asp-for="NumberOfGuests" class="form-control" id="numberOfGuests" />
+        <div class="form-group mb-3">
+            <label class="text-pink">Số lượng vé:</label>
+            <input asp-for="NumberOfGuests" class="form-control bg-light-pink" id="numberOfGuests" />
             <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label>Tổng giá:</label>
-            <span id="totalPrice">@trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</span>
+        <div class="form-group mb-4">
+            <label class="text-pink">Tổng giá:</label>
+            <span id="totalPrice" class="d-block text-pink fw-bold">@trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Đặt chỗ</button>
+        <button type="submit" class="btn btn-pink btn-block">Đặt chỗ</button>
     </form>
 </div>
 
@@ -75,7 +90,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             var numberOfGuestsInput = document.getElementById('numberOfGuests');
             var totalPriceSpan = document.getElementById('totalPrice');
-
             var pricePerTicket = parseFloat('@(trip.Price.ToString(System.Globalization.CultureInfo.InvariantCulture))');
 
             function updateTotalPrice() {
