@@ -47,7 +47,7 @@ namespace API.Controllers
             };
 
             _tourService.AddTour(tour, request.LocationIds);
-            return Ok();
+            return Ok(tour);
         }
 
         [HttpPut("{id}")]
@@ -59,7 +59,7 @@ namespace API.Controllers
             }
 
             _tourService.UpdateTour(tour);
-            return NoContent();
+            return Ok(tour);
         }
 
         [HttpDelete("{id}")]

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Data;
 using Microsoft.Data.SqlClient;
 using Core.Entities;
@@ -254,5 +253,50 @@ namespace DAL.Repositories
             Console.WriteLine($"Phương thức Find hoàn thành với {users.Count} kết quả");
             return users;
         }
+        public User GetByPhoneNumber(string phoneNumber)
+        {
+            Console.WriteLine($"Bắt đầu GetByPhoneNumber với PhoneNumber: {phoneNumber}");
+
+            using (SqlConnection connection = new SqlConnection(GlobalConfig.CONNECTION_STRING))
+            {
+                string query = "SELECT UserID, Role, FullName, PhoneNumber, Email, Password, Address FROM Users WHERE PhoneNumber = @PhoneNumber";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
+                try
+                {
+                    connection.Open();
+                    Console.WriteLine("Đã mở kết nối database cho GetByPhoneNumber.");
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new User
+                            {
+                                UserID = reader.GetGuid(reader.GetOrdinal("UserID")),
+                                Role = (Role)reader.GetInt32(reader.GetOrdinal("Role")),
+                                FullName = reader.GetString(reader.GetOrdinal("FullName")),
+                                PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                                Password = reader.GetString(reader.GetOrdinal("Password")),
+                                Address = reader.IsDBNull(reader.GetOrdinal("Address")) ? null : reader.GetString(reader.GetOrdinal("Address"))
+                            };
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Không tìm thấy User cho PhoneNumber: {phoneNumber}");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi trong GetByPhoneNumber: {ex.Message}");
+                    throw;
+                }
+            }
+            return null;
+        }
+
     }
 }

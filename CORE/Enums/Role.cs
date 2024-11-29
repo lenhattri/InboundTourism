@@ -4,8 +4,8 @@ namespace Core.Enums
 {
     public enum Role
     {
-        Customer,
-        Admin,
-        None
+        Customer = 0,
+        Admin = 1,
+        None = -1
     }
 }

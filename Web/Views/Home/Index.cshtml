@@ -1,0 +1,50 @@
+﻿@model List<Web.Models.TourWithLocations>
+@{
+    ViewData["Title"] = "Trang Chủ";
+}
+
+@if (ViewBag.ShowBookingConfirmation == true)
+{
+    <div class="alert alert-success">
+        <h3>Đặt chỗ thành công!</h3>
+        <p><strong>Tour:</strong> @ViewBag.Tour.TourName</p>
+        <p><strong>Chuyến đi:</strong> @ViewBag.Trip.StartDate.ToShortDateString() - @ViewBag.Trip.EndDate.ToShortDateString()</p>
+        <p><strong>Số lượng vé:</strong> @ViewBag.Booking.NumberOfGuests</p>
+        <p><strong>Tổng giá:</strong> @ViewBag.Booking.TotalPrice.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<div class="container">
+    <h2>Danh sách các Tour</h2>
+    <div class="row">
+        @foreach (var tourWithLocations in Model)
+        {
+            var tour = tourWithLocations.Tour;
+            var locations = tourWithLocations.Locations;
+
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@tour.TourName</h5>
+                        <p class="card-text">@tour.Description</p>
+                        <h6>Điểm đến:</h6>
+                        <ul>
+                            @foreach (var location in locations)
+                            {
+                                <li>@location.LocationName</li>
+                            }
+                        </ul>
+                        <a href="@Url.Action("Details", "Tour", new { id = tour.TourID })" class="btn btn-primary">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

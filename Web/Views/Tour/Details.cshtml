@@ -1,0 +1,49 @@
+﻿@model List<Core.Entities.Trip>
+@{
+    var tour = ViewBag.Tour as Core.Entities.Tour;
+    ViewData["Title"] = $"Chi tiết Tour: {tour?.TourName}";
+}
+
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="display-4">Chi tiết Tour: @tour.TourName</h1>
+        <p class="lead">@tour.Description</p>
+    </div>
+
+    <div>
+        <h2 class="mb-3">Danh sách các chuyến đi</h2>
+
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="row">
+                @foreach (var trip in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Chuyến đi</h5>
+                                <ul class="list-unstyled">
+                                    <li><strong>Giá:</strong> @trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</li>
+                                    <li><strong>Thời gian:</strong> @trip.StartDate.ToShortDateString() - @trip.EndDate.ToShortDateString()</li>
+                                    <li><strong>Khoảng cách:</strong> @trip.Distance km</li>
+                                    <li><strong>Số khách tối đa:</strong> @trip.MaxGuests</li>
+                                </ul>
+                                <div class="text-center">
+                                    <a href="@Url.Action("Booking", "Booking", new { tripId = trip.TripID })" class="btn btn-primary">
+                                        Đặt chỗ
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <p>Hiện không có chuyến đi nào cho tour này.</p>
+            </div>
+        }
+    </div>
+</div>

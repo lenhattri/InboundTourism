@@ -1,0 +1,363 @@
+﻿/* Tổng quan */
+@import url('https://fonts.googleapis.com/css2?family=Cascadia+Cove:wght@400;700&display=swap');
+
+/* Đặt kích thước và bố cục cơ bản */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Đảm bảo chiều cao đầy đủ */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Cấu trúc dọc: header, main, footer */
+    font-family: 'Cascadia Cove', sans-serif;
+    background-color: #ffe6e9; /* Màu hồng pastel */
+    color: #4a4a4a;
+}
+
+/* Header */
+/* Header */
+header {
+    background-color: #f9d8e5; /* Hồng nhạt */
+    padding: 15px 20px;
+    border-bottom: 2px solid #d9368d; /* Viền dưới hồng đậm */
+    position: sticky; /* Giữ header cố định khi cuộn */
+    top: 0;
+    z-index: 1000; /* Luôn hiển thị trên các thành phần khác */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng nhẹ */
+}
+
+    /* Logo thương hiệu */
+    header .navbar-brand {
+        font-weight: bold;
+        font-size: 1.8rem;
+        color: #d9368d !important; /* Hồng đậm */
+        text-decoration: none;
+        margin-right: 20px;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+        header .navbar-brand:hover {
+            color: #b02b6d; /* Hồng đậm hơn */
+            transform: scale(1.1); /* Hiệu ứng phóng to nhẹ */
+        }
+
+    /* Thanh điều hướng */
+    header .nav {
+        display: flex;
+        gap: 15px;
+    }
+
+        header .nav .nav-link {
+            font-size: 1rem;
+            color: #4a4a4a; /* Xám đậm */
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            header .nav .nav-link:hover {
+                background-color: #d9368d; /* Nền hồng đậm */
+                color: #ffffff; /* Chữ trắng */
+            }
+
+        header .nav .active {
+            background-color: #b02b6d; /* Nền hồng đậm hơn */
+            color: #ffffff; /* Chữ trắng */
+        }
+
+    /* Nút menu cho di động */
+    header .navbar-toggler {
+        background-color: #d9368d;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: #ffffff;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+        header .navbar-toggler:hover {
+            background-color: #b02b6d;
+        }
+
+    /* Menu ẩn trên di động */
+    header .navbar-collapse {
+        background-color: #ffe6e9; /* Nền hồng pastel */
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        header .navbar-collapse .nav-link {
+            display: block;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+/* Điều chỉnh cho giao diện nhỏ */
+@media (max-width: 768px) {
+    header .nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    header .navbar-brand {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* Main - nội dung chính */
+main {
+    flex: 1; /* Tự động chiếm không gian giữa header và footer */
+    padding: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #f9d8e5; /* Hồng nhạt */
+    color: #8b416a;
+    text-align: center;
+    padding: 15px;
+    border-top: 2px solid #d9368d;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+    footer a {
+        color: #d9368d;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            text-decoration: underline;
+            color: #b02b6d; /* Hồng đậm hơn */
+        }
+
+/* Tiêu đề */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #d9368d; /* Hồng đậm */
+}
+
+/* Form Styling */
+form {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border: 2px solid #e1b8cc; /* Viền hồng nhạt */
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng */
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto; /* Căn giữa */
+}
+
+    form div {
+        margin-bottom: 15px;
+    }
+
+label {
+    display: block;
+    font-size: 1em;
+    margin-bottom: 5px;
+    color: #d9368d; /* Hồng đậm */
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e1b8cc;
+    border-radius: 5px;
+    background-color: #ffe6e9; /* Hồng pastel */
+    color: #4a4a4a;
+    font-size: 1em;
+}
+
+/* Nút bấm */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #d9368d; /* Hồng đậm */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    button:hover {
+        background-color: #b02b6d; /* Hồng đậm hơn */
+    }
+
+/* Liên kết */
+a {
+    color: #d9368d;
+    text-decoration: none;
+    font-size: 0.9em;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+/* Card Layout */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.col-md-4 {
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #d9368d;
+}
+
+.card-text {
+    font-size: 0.9em;
+    color: #4a4a4a;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+    ul li {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+        color: #4a4a4a;
+    }
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #d9368d;
+    transition: background-color 0.3s ease;
+}
+
+    .btn:hover {
+        background-color: #b02b6d;
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .col-md-4 {
+        flex: 1 1 calc(50% - 20px);
+        max-width: calc(50% - 20px);
+    }
+
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+
+    .nav-link {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-md-4 {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+/* Nút trong form */
+form button {
+    width: 100%; /* Nút trong form sẽ chiếm toàn bộ chiều rộng */
+}
+
+/* Nút logout (tách riêng) */
+form[asp-action="Logout"] button {
+    width: auto; /* Không giãn rộng */
+    padding: 0; /* Padding mặc định */
+    background-color: transparent; /* Nền trong suốt */
+    color: #d9368d; /* Chỉ có màu chữ */
+    border: none; /* Bỏ viền */
+    font-size: 1rem; /* Font chữ nhỏ hơn */
+    text-decoration: underline; /* Gạch chân giống link */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    form[asp-action="Logout"] button:hover {
+        color: #b02b6d; /* Đổi màu chữ khi hover */
+        text-decoration: none; /* Bỏ gạch chân khi hover */
+    }
+    .logout-btn:hover {
+        color: #b02b6d; /* Hồng đậm hơn */
+        text-decoration: none;
+    }
+
+#form-logout {
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+nav .navbar-brand {
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: #d9368d !important; /* Hồng đậm */
+    text-decoration: none;
+    margin-right: 20px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+    nav .navbar-brand:hover {
+        color: #b02b6d; /* Hồng đậm hơn */
+        transform: scale(1.1); /* Phóng to nhẹ khi hover */
+    }
+
+/* Thanh điều hướng */
+nav .nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}

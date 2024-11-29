@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Core.Entities
 {
     public class Booking
     {
-        public Guid BookingID { get; set; }
+        public Guid BookingID { get; set; } = Guid.NewGuid();
 
         public Guid TripID { get; set; }
 

@@ -40,7 +40,7 @@ namespace API.Controllers
         public ActionResult AddTrip(Trip trip)
         {
             _tripService.AddTrip(trip);
-            return Ok();
+            return Ok("Thêm thành công");
         }
 
         [HttpPut("{id}")]
@@ -52,7 +52,7 @@ namespace API.Controllers
             }
 
             _tripService.UpdateTrip(trip);
-            return NoContent();
+            return Ok("Cập nhật thành công");
         }
 
         [HttpDelete("{id}")]

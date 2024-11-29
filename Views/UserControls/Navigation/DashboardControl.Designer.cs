@@ -92,6 +92,7 @@
             btnTrip.TabIndex = 8;
             btnTrip.Text = "Chuyến đi";
             btnTrip.UseVisualStyleBackColor = false;
+            btnTrip.Click += btnTrip_Click;
             // 
             // DashboardControl
             // 

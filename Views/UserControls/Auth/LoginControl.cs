@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Base.Auth;
+using Base.Utils.Fetch;
+using API.DTO; // Assuming the LoginRequest DTO is defined here
 using Base.Context;
 using Views.Forms;
 using Core.Enums;
-
+using Core.Entities;
+using Base.Config;
 namespace Views.UserControls.Auth
 {
     public partial class LoginControl : UserControl
@@ -13,7 +15,7 @@ namespace Views.UserControls.Auth
         public LoginControl()
         {
             InitializeComponent();
-            txtPassword.PasswordChar = '●'; // Hiển thị dạng mật khẩu
+            txtPassword.PasswordChar = '●';
         }
 
         private async void BtnLogin_Click(object sender, EventArgs e)
@@ -21,13 +23,14 @@ namespace Views.UserControls.Auth
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text;
 
-            // Kiểm tra đầu vào
+            // Validate email format
             if (string.IsNullOrEmpty(email) || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 MessageBox.Show("Vui lòng nhập email hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
+            // Validate password
             if (string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -36,15 +39,25 @@ namespace Views.UserControls.Auth
 
             try
             {
-                // Thực hiện đăng nhập và nhận vai trò
-                (bool isSuccess, Role userRole) = await Authentication.SignIn(email, password);
-
-                if (isSuccess)
+                // Prepare the login request data
+                var loginRequest = new LoginRequest
                 {
-                    // Lưu thông tin người dùng
+                    Email = email,
+                    Password = password
+                };
+
+                // Call the API for login
+                var response = await FetchService.Instance.PostAsync<User>($"{GlobalConfig.BASE_URL}/auth/login", loginRequest);
+
+                // Check if the API response is successful
+                if (response.Success)
+                {
+                    var userRole = response.Data.Role; // Assuming the role is returned as part of the response
+
+                    // Set user data in the context
                     UserContext.Instance.SetUserData(email, userRole, email);
 
-                    // Điều hướng dựa trên vai trò
+                    // Open the appropriate form based on user role
                     if (userRole == Role.Customer)
                     {
                         var customerForm = new CustomerForm();
@@ -56,7 +69,7 @@ namespace Views.UserControls.Auth
                         mainForm.Show();
                     }
 
-                    // Ẩn form hiện tại
+                    // Close the current login form
                     ParentForm?.Hide();
                 }
                 else

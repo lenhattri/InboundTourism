@@ -5,6 +5,7 @@ using Views.Interfaces;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Views.UserControls.Loading;
+using Base.Config;
 
 namespace Views.UserControls.Admin
 {
@@ -58,32 +59,38 @@ namespace Views.UserControls.Admin
 
         private async Task LoadLocationsAsync()
         {
-
             loadingControl1.Visible = true;
             loadingControl1.BringToFront();
             this.Enabled = false;
 
             try
             {
-                
-                var locations = await FetchService.Instance.GetAsync<List<Location>>("http://localhost:5173/api/v1/location");
-                dataGridView1.DataSource = new BindingList<Location>(locations);
+                var response = await FetchService.Instance.GetAsync<List<Location>>($"{GlobalConfig.BASE_URL}/location");
+
+                if (response.Success)
+                {
+                    dataGridView1.DataSource = new BindingList<Location>(response.Data);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi khi tải danh sách địa điểm: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách địa điểm: {ex.Message}");
+                MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-              
                 loadingControl1.Visible = false;
                 this.Enabled = true;
             }
         }
 
+
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            // Handle selection change if needed
+          
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -92,7 +99,7 @@ namespace Views.UserControls.Admin
 
             var column = dataGridView1.Columns[e.ColumnIndex];
             var location = dataGridView1.Rows[e.RowIndex].DataBoundItem as Location;
-            // Handle cell click if needed
+            
         }
 
         private async Task DeleteLocationAsync(Location location)
@@ -100,28 +107,36 @@ namespace Views.UserControls.Admin
             var confirmDelete = MessageBox.Show("Bạn có chắc chắn muốn xóa địa điểm này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirmDelete == DialogResult.Yes)
             {
-                // Show LoadingControl and disable interaction while deleting
                 loadingControl1.Visible = true;
                 loadingControl1.BringToFront();
                 this.Enabled = false;
 
                 try
                 {
-                    await FetchService.Instance.DeleteAsync($"http://localhost:5173/api/v1/location/{location.LocationID}");
-                    await LoadLocationsAsync(); // Reload list after deletion
+                    var response = await FetchService.Instance.DeleteAsync($"{GlobalConfig.BASE_URL}/location/{location.LocationID}");
+
+                    if (response.Success)
+                    {
+                        await LoadLocationsAsync();
+                        MessageBox.Show("Địa điểm đã được xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Lỗi khi xóa địa điểm: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi xóa địa điểm: {ex.Message}");
+                    MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {
-                    // Hide LoadingControl and re-enable interaction
                     loadingControl1.Visible = false;
                     this.Enabled = true;
                 }
             }
         }
+
 
         private void btnAdd_Click(object sender, EventArgs e)
         {

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Core.Entities
 {
     public class Trip
     {
-        public Guid TripID { get; set; }
+        public Guid TripID { get; set; } = Guid.NewGuid();
         public Guid TourID { get; set; }
 
         public decimal Price { get; set; }

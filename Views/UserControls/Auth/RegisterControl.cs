@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Core.Entities;
 using System.Text.RegularExpressions;
-using Base.Auth;
+using Views.Auth;
 
 using Views.Forms;
 using Base.Context;

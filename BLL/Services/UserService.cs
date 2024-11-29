@@ -1,4 +1,5 @@
-﻿using BLL.Interfaces;
+﻿using Base.Utils.Hash;
+using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
 using System;
@@ -32,11 +33,48 @@ namespace BLL.Services
 
         public void AddUser(User user)
         {
+            var existingPhoneUser = _userRepository.GetByPhoneNumber(user.PhoneNumber);
+            if (existingPhoneUser != null && existingPhoneUser.UserID != user.UserID)
+            {
+                throw new Exception("Số điện thoại đã được sử dụng bởi một người dùng khác.");
+            }
+
+            var existingEmailUser = _userRepository.GetByEmail(user.Email);
+            if (existingEmailUser != null && existingEmailUser.UserID != user.UserID)
+            {
+                throw new Exception("Email đã được sử dụng bởi một người dùng khác.");
+            }
+
+            var usersWithSameName = _userRepository.Find(fullName: user.FullName).Where(u => u.UserID != user.UserID);
+            if (usersWithSameName.Any())
+            {
+                throw new Exception("Tên người dùng đã tồn tại.");
+            }
+            user.Password = HashPassword.Hash(user.Password);
             _userRepository.Add(user);
         }
 
         public void UpdateUser(User user)
         {
+            
+            var existingPhoneUser = _userRepository.GetByPhoneNumber(user.PhoneNumber);
+            if (existingPhoneUser != null && existingPhoneUser.UserID != user.UserID)
+            {
+                throw new Exception("Số điện thoại đã được sử dụng bởi một người dùng khác.");
+            }
+
+            var existingEmailUser = _userRepository.GetByEmail(user.Email);
+            if (existingEmailUser != null && existingEmailUser.UserID != user.UserID)
+            {
+                throw new Exception("Email đã được sử dụng bởi một người dùng khác.");
+            }
+
+            var usersWithSameName = _userRepository.Find(fullName: user.FullName).Where(u => u.UserID != user.UserID);
+            if (usersWithSameName.Any())
+            {
+                throw new Exception("Tên người dùng đã tồn tại.");
+            }
+
             _userRepository.Update(user);
         }
 

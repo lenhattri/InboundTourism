@@ -1,8 +1,7 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
-using System;
-using System.Collections.Generic;
+
 
 namespace BLL.Services
 {

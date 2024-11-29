@@ -6,6 +6,7 @@ using Views.Navigation;
 using Views.UserControls.Admin;
 using Views.Interfaces;
 using System.Drawing.Drawing2D;
+using Base.Context;
 
 namespace Views.Forms
 {
@@ -22,7 +23,7 @@ namespace Views.Forms
            
             Router router = new Router(_navigationService);
             router.RegisterViews();
-
+            lbName.Text = UserContext.Instance.Username;
             _navigationService.NavigateTo("Loading");
 
         }

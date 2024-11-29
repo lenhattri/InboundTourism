@@ -13,5 +13,6 @@ namespace DAL.Interfaces
         void Delete(Guid userId);
         User GetByEmail(string email);
         IEnumerable<User> Find(string fullName = null, string email = null, string phoneNumber = null);
+        User GetByPhoneNumber(string phoneNumber);
     }
 }

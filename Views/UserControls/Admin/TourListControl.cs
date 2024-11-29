@@ -58,20 +58,26 @@ namespace Views.UserControls.Admin
 
         private async Task LoadToursAsync()
         {
-            // Show LoadingControl and disable interaction with other controls
             loadingControl1.Visible = true;
             loadingControl1.BringToFront();
             this.Enabled = false;
 
             try
             {
-                // Fetch tours data
-                var tours = await FetchService.Instance.GetAsync<List<Tour>>($"{GlobalConfig.BASE_URL}/tour");
-                dataGridView1.DataSource = new BindingList<Tour>(tours);
+                var response = await FetchService.Instance.GetAsync<List<Tour>>($"{GlobalConfig.BASE_URL}/tour");
+
+                if (response.Success)
+                {
+                    dataGridView1.DataSource = new BindingList<Tour>(response.Data);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi khi tải danh sách tour: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách tour: {ex.Message}");
+                MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -80,34 +86,32 @@ namespace Views.UserControls.Admin
             }
         }
 
-        private void DataGridView1_SelectionChanged(object sender, EventArgs e)
-        {
-            // Handle selection change if needed
-        }
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Handle cell click if needed
-        }
-
         private async Task DeleteTourAsync(Tour tour)
         {
             var confirmDelete = MessageBox.Show("Bạn có chắc chắn muốn xóa tour này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirmDelete == DialogResult.Yes)
             {
-
                 loadingControl1.Visible = true;
                 loadingControl1.BringToFront();
                 this.Enabled = false;
 
                 try
                 {
-                    await FetchService.Instance.DeleteAsync($"{GlobalConfig.BASE_URL}/tour/{tour.TourID}");
-                    await LoadToursAsync(); 
+                    var response = await FetchService.Instance.DeleteAsync($"{GlobalConfig.BASE_URL}/tour/{tour.TourID}");
+
+                    if (response.Success)
+                    {
+                        await LoadToursAsync();
+                        MessageBox.Show("Tour đã được xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Lỗi khi xóa tour: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi xóa tour: {ex.Message}");
+                    MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 finally
                 {

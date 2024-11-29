@@ -39,8 +39,17 @@ namespace API.Controllers
         [HttpPost]
         public ActionResult AddUser(User user)
         {
-            _userService.AddUser(user);
-            return Ok();
+
+            try
+            {
+                _userService.AddUser(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
@@ -48,11 +57,19 @@ namespace API.Controllers
         {
             if (id != user.UserID)
             {
-                return BadRequest();
+                return BadRequest("ID không khớp với dữ liệu người dùng.");
             }
-
-            _userService.UpdateUser(user);
-            return NoContent();
+            
+            try
+            {
+                _userService.UpdateUser(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                
+                return BadRequest( ex.Message );
+            }
         }
 
         [HttpDelete("{id}")]

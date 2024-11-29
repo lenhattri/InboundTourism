@@ -40,26 +40,28 @@
             // 
             btnDelete.BackColor = Color.PaleVioletRed;
             btnDelete.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(1093, 209);
+            btnDelete.Location = new Point(1100, 282);
             btnDelete.Margin = new Padding(4);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(149, 56);
             btnDelete.TabIndex = 12;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnChange
             // 
             btnChange.BackColor = Color.SkyBlue;
             btnChange.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnChange.ForeColor = SystemColors.Desktop;
-            btnChange.Location = new Point(1093, 111);
+            btnChange.Location = new Point(1100, 184);
             btnChange.Margin = new Padding(4);
             btnChange.Name = "btnChange";
             btnChange.Size = new Size(149, 56);
             btnChange.TabIndex = 11;
             btnChange.Text = "Sửa";
             btnChange.UseVisualStyleBackColor = false;
+            btnChange.Click += btnChange_Click;
             // 
             // dataGridView1
             // 
@@ -85,19 +87,19 @@
             dataGridView1.ShowCellErrors = false;
             dataGridView1.Size = new Size(1043, 650);
             dataGridView1.TabIndex = 10;
-            
             // 
             // btnAdd
             // 
             btnAdd.BackColor = Color.LimeGreen;
             btnAdd.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(1093, 16);
+            btnAdd.Location = new Point(1100, 89);
             btnAdd.Margin = new Padding(4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(149, 56);
             btnAdd.TabIndex = 9;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
             // TripListControl
             // 
@@ -109,6 +111,7 @@
             Controls.Add(btnAdd);
             Name = "TripListControl";
             Size = new Size(1266, 714);
+            Load += TripListControl_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }

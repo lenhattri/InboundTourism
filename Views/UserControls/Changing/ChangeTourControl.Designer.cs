@@ -37,9 +37,6 @@
             listView1 = new ListView();
             colID = new ColumnHeader();
             colName = new ColumnHeader();
-            listView2 = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
             SuspendLayout();
             // 
             // btnAdd
@@ -47,7 +44,7 @@
             btnAdd.BackColor = Color.LightGreen;
             btnAdd.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAdd.ForeColor = SystemColors.Desktop;
-            btnAdd.Location = new Point(111, 378);
+            btnAdd.Location = new Point(111, 362);
             btnAdd.Margin = new Padding(4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(149, 56);
@@ -60,7 +57,7 @@
             btnChange.BackColor = Color.SkyBlue;
             btnChange.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnChange.ForeColor = SystemColors.Desktop;
-            btnChange.Location = new Point(111, 568);
+            btnChange.Location = new Point(111, 362);
             btnChange.Margin = new Padding(4);
             btnChange.Name = "btnChange";
             btnChange.Size = new Size(149, 56);
@@ -109,15 +106,6 @@
             listView1.TabIndex = 22;
             listView1.UseCompatibleStateImageBehavior = false;
             // 
-            // listView2
-            // 
-            listView2.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
-            listView2.Location = new Point(111, 378);
-            listView2.Name = "listView2";
-            listView2.Size = new Size(582, 145);
-            listView2.TabIndex = 23;
-            listView2.UseCompatibleStateImageBehavior = false;
-            // 
             // ChangeTourControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -129,7 +117,6 @@
             Controls.Add(btnChange);
             Controls.Add(label1);
             Controls.Add(txtTourName);
-            Controls.Add(listView2);
             Name = "ChangeTourControl";
             Size = new Size(1053, 699);
             ResumeLayout(false);

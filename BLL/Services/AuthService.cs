@@ -17,12 +17,15 @@ namespace BLL.Services
         public User Login(string email, string password)
         {
             var user = _userService.GetUserByEmail(email);
+            Console.WriteLine(user.ToString());
+            Console.WriteLine($"{user.Password}:{HashPassword.Hash(password)}");
 
             if (user == null || user.Password != HashPassword.Hash(password))
             {
+               
                 return null;
             }
-
+            Console.WriteLine($"User : {user.UserID} : {user.Email}");
             return user;
         }
 
@@ -33,7 +36,7 @@ namespace BLL.Services
                 return false;
             }
 
-            newUser.Password = HashPassword.Hash(newUser.Password);
+            //newUser.Password = HashPassword.Hash(newUser.Password);
             _userService.AddUser(newUser);
             return true;
         }

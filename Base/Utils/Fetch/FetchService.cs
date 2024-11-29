@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-
+using Base.DTO;
 namespace Base.Utils.Fetch
 {
     public class FetchService
@@ -15,7 +15,9 @@ namespace Base.Utils.Fetch
 
         public static FetchService Instance => _instance.Value;
 
-        public async Task<T> GetAsync<T>(string endpoint)
+
+        // GET Method
+        public async Task<ApiResponse<T>> GetAsync<T>(string endpoint)
         {
             try
             {
@@ -24,26 +26,38 @@ namespace Base.Utils.Fetch
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonData = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<T>(jsonData);
+                    return new ApiResponse<T>
+                    {
+                        Success = true,
+                        Data = JsonConvert.DeserializeObject<T>(jsonData)
+                    };
                 }
                 else
                 {
-                    Console.WriteLine($"GET thất bại với mã trạng thái: {response.StatusCode}");
-                    return default;
+                    return new ApiResponse<T>
+                    {
+                        Success = false,
+                        ErrorMessage = $"{response.StatusCode}, {await response.Content.ReadAsStringAsync()}"
+                    };
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi thực hiện GET: {ex.Message}");
-                return default;
+                return new ApiResponse<T>
+                {
+                    Success = false,
+                    ErrorMessage = $"{ex.Message}"
+                };
             }
         }
 
-        public async Task<T> PostAsync<T>(string endpoint, object data)
+        // POST Method
+        public async Task<ApiResponse<T>> PostAsync<T>(string endpoint, object data)
         {
             try
             {
                 string jsonContent = JsonConvert.SerializeObject(data);
+
                 HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await _httpClient.PostAsync(endpoint, httpContent);
@@ -51,26 +65,37 @@ namespace Base.Utils.Fetch
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonData = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<T>(jsonData);
+                    return new ApiResponse<T>
+                    {
+                        Success = true,
+                        Data = JsonConvert.DeserializeObject<T>(jsonData)
+                    };
                 }
                 else
                 {
-                    Console.WriteLine($"POST thất bại với mã trạng thái: {response.StatusCode}");
-                    return default;
+                    return new ApiResponse<T>
+                    {
+                        Success = false,
+                        ErrorMessage = $"{response.StatusCode}, {await response.Content.ReadAsStringAsync()}"
+                    };
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi thực hiện POST: {ex.Message}");
-                return default;
+                return new ApiResponse<T>
+                {
+                    Success = false,
+                    ErrorMessage = $"{ex.Message}"
+                };
             }
         }
 
-        public async Task<T> PutAsync<T>(string endpoint, object data)
+        public async Task<ApiResponse<T>> PutAsync<T>(string endpoint, object data)
         {
             try
             {
                 string jsonContent = JsonConvert.SerializeObject(data);
+
                 HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await _httpClient.PutAsync(endpoint, httpContent);
@@ -78,22 +103,33 @@ namespace Base.Utils.Fetch
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonData = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<T>(jsonData);
+                    return new ApiResponse<T>
+                    {
+                        Success = true,
+                        Data = JsonConvert.DeserializeObject<T>(jsonData)
+                    };
                 }
                 else
                 {
-                    Console.WriteLine($"PUT thất bại với mã trạng thái: {response.StatusCode}");
-                    return default;
+                    return new ApiResponse<T>
+                    {
+                        Success = false,
+                        ErrorMessage = $"{response.StatusCode}, {await response.Content.ReadAsStringAsync()}"
+                    };
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi thực hiện PUT: {ex.Message}");
-                return default;
+                return new ApiResponse<T>
+                {
+                    Success = false,
+                    ErrorMessage = $"{ex.Message}"
+                };
             }
         }
 
-        public async Task<bool> DeleteAsync(string endpoint)
+        // DELETE Method
+        public async Task<ApiResponse<bool>> DeleteAsync(string endpoint)
         {
             try
             {
@@ -101,18 +137,28 @@ namespace Base.Utils.Fetch
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return true;
+                    return new ApiResponse<bool>
+                    {
+                        Success = true,
+                        Data = true
+                    };
                 }
                 else
                 {
-                    Console.WriteLine($"DELETE thất bại với mã trạng thái: {response.StatusCode}");
-                    return false;
+                    return new ApiResponse<bool>
+                    {
+                        Success = false,
+                        ErrorMessage = $"{response.StatusCode}, {await response.Content.ReadAsStringAsync()}"
+                    };
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Lỗi khi thực hiện DELETE: {ex.Message}");
-                return false;
+                return new ApiResponse<bool>
+                {
+                    Success = false,
+                    ErrorMessage = $"{ex.Message}"
+                };
             }
         }
     }

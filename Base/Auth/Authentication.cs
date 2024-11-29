@@ -1,6 +1,8 @@
 ﻿using System.Text;
-using System.Text.Json;
 using Base.Config;
+using Base.DTO;
+using Base.Utils.Fetch;
+using Base.Utils.Hash;
 using Core.Entities;
 using Core.Enums;
 
@@ -8,8 +10,6 @@ namespace Base.Auth
 {
     public class Authentication
     {
-        private static readonly HttpClient _httpClient = new HttpClient();
-
         public static async Task<(bool IsSuccess, Role UserRole)> SignIn(string username, string password)
         {
             var loginRequest = new
@@ -18,37 +18,30 @@ namespace Base.Auth
                 Password = password
             };
 
-            var content = new StringContent(
-                JsonSerializer.Serialize(loginRequest),
-                Encoding.UTF8,
-                "application/json"
-            );
-
             try
             {
-                var response = await _httpClient.PostAsync($"{GlobalConfig.BASE_URL}/auth/login", content);
+                var response = await FetchService.Instance.PostAsync<User>($"{GlobalConfig.BASE_URL}/auth/login", loginRequest);
 
-                if (response.IsSuccessStatusCode)
+                if (response.Success)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    var userData = JsonSerializer.Deserialize<YourUserDto>(responseContent);
-
-                    
+                    User userData = response.Data;
                     return (true, userData.Role);
                 }
                 else
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Đăng nhập thất bại: {response.StatusCode} - {errorMessage}");
+                    Console.WriteLine($"Đăng nhập thất bại: {response.ErrorMessage}");
                     return (false, Role.None);
                 }
             }
             catch (Exception ex)
             {
+                // Catch all exceptions and log the error
                 Console.WriteLine("Lỗi khi đăng nhập: " + ex.Message);
                 return (false, Role.None);
             }
         }
+
+
         public static async Task SignUp(User user)
         {
             var registerRequest = new
@@ -61,26 +54,17 @@ namespace Base.Auth
                 Role = user.Role,
             };
 
-            var content = new StringContent(
-                JsonSerializer.Serialize(registerRequest),
-                Encoding.UTF8,
-                "application/json"
-            );
-
             try
             {
-                var response = await _httpClient.PostAsync($"{GlobalConfig.BASE_URL}/auth/register", content);
+                var response = await FetchService.Instance.PostAsync<string>($"{GlobalConfig.BASE_URL}/auth/register", registerRequest);
 
-                if (response.IsSuccessStatusCode)
+                if (response.Success)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Đăng ký thành công: " + responseContent);
-                    
+                    Console.WriteLine("Đăng ký thành công: " + response.Data);
                 }
                 else
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Đăng ký thất bại: {response.StatusCode}, {errorMessage}");
+                    Console.WriteLine($"Đăng ký thất bại: {response.ErrorMessage}");
                 }
             }
             catch (Exception ex)
@@ -88,10 +72,7 @@ namespace Base.Auth
                 Console.WriteLine("Lỗi khi đăng ký: " + ex.Message);
             }
         }
-
-
     }
-
 
     public class YourUserDto
     {

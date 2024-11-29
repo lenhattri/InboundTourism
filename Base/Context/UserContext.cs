@@ -10,7 +10,7 @@ namespace Base.Context
         private static UserContext _instance;
 
 
-        public string? Username { get; private set; } = null;
+        public string? Username { get; private set; } = "";
         public Role? Role { get; private set; } = null;
         public string? Email { get; private set; } = null;
 

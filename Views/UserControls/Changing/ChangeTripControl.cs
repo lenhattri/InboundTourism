@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Views.Interfaces;
+﻿using Views.Interfaces;
 using Core.Entities;
 using Base.Utils.Fetch;
 using Base.Config;
@@ -13,75 +9,120 @@ namespace Views.UserControls.Changing
     {
         private Guid _tripId;
         private Guid _tourId;
+        private List<Tour> _allTours;
 
         public ChangeTripControl()
         {
             InitializeComponent();
 
-           
+            listView1.CheckBoxes = false;
+            listView1.FullRowSelect = true; 
+            listView1.HideSelection = false; 
+            btnAdd.Click += async (sender, e) => await AddTripAsync();
+            btnChange.Click += async (sender, e) => await UpdateTripAsync();
+            btnChange.Visible = false;
+            btnAdd.Visible = false;
 
-
-            listViewBookings.View = View.Details;
-            listViewBookings.Columns.Add("Booking ID", 200);
-            listViewBookings.Columns.Add("User ID", 200);
-            listViewBookings.Columns.Add("Ngày đặt", 150);
-            listViewBookings.Columns.Add("Số khách", 100);
-            listViewBookings.Columns.Add("Tổng giá", 150);
-
-            listViewBookings.FullRowSelect = true;
+            listView1.SelectedIndexChanged += OnTourSelected;
         }
 
         public async void ReceiveParameter(object parameter)
         {
             if (parameter is Trip trip)
             {
-                
                 _tripId = trip.TripID;
                 _tourId = trip.TourID;
-
                 txtPrice.Text = trip.Price.ToString();
                 dtpStartDate.Value = trip.StartDate;
                 dtpEndDate.Value = trip.EndDate;
                 txtDistance.Text = trip.Distance.ToString();
                 numMaxGuests.Value = trip.MaxGuests;
-
-
-
-            
-                await LoadBookingsForTripAsync(_tripId);
+                btnChange.Visible = true;
+                btnAdd.Visible = false;
             }
-            else if (parameter is Guid tourId)
+            else
             {
-           
-                _tripId = Guid.Empty;
-                _tourId = tourId;
+                btnAdd.Visible = true;
+                btnChange.Visible = false;
+            }
 
-                txtPrice.Clear();
-                dtpStartDate.Value = DateTime.Now;
-                dtpEndDate.Value = DateTime.Now.AddDays(1);
-                txtDistance.Clear();
-                numMaxGuests.Value = 1;
+            await LoadAllToursAsync();
+            PopulateListView();
+        }
 
+        private async Task LoadAllToursAsync()
+        {
+            try
+            {
+                var response = await FetchService.Instance.GetAsync<List<Tour>>($"{GlobalConfig.BASE_URL}/tour");
 
-
-                
-                listViewBookings.Items.Clear();
+                if (response.Success)
+                {
+                    _allTours = response.Data;
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi khi tải danh sách Tour: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private async Task btnSave_Click(object sender, EventArgs e)
+        private void PopulateListView()
+        {
+            listView1.Clear(); 
+
+            
+            listView1.Columns.Add("Tên Tour", 200);
+            listView1.Columns.Add("Mô tả", 300);
+            listView1.Columns.Add("Mã Tour", 150);
+
+            foreach (var tour in _allTours)
+            {
+                var item = new ListViewItem(tour.TourName)
+                {
+                    Tag = tour.TourID
+                };
+                item.SubItems.Add(tour.Description);
+                item.SubItems.Add(tour.TourID.ToString());
+
+                if (tour.TourID == _tourId)
+                {
+                    item.Selected = true;
+                }
+
+                listView1.Items.Add(item);
+            }
+
+            
+            listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+        }
+
+
+        private void OnTourSelected(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                _tourId = (Guid)listView1.SelectedItems[0].Tag; // Lấy `TourID` từ Tag
+                MessageBox.Show($"Bạn đã chọn Tour: {listView1.SelectedItems[0].Text}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private async Task AddTripAsync()
         {
             try
             {
                 if (!ValidateForm())
                 {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng kiểm tra lại thông tin đã nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                var trip = new Trip
+                var newTrip = new Trip
                 {
-                    TripID = _tripId == Guid.Empty ? Guid.NewGuid() : _tripId,
                     TourID = _tourId,
                     Price = decimal.Parse(txtPrice.Text),
                     StartDate = dtpStartDate.Value,
@@ -90,61 +131,95 @@ namespace Views.UserControls.Changing
                     MaxGuests = (int)numMaxGuests.Value
                 };
 
-                if (_tripId == Guid.Empty)
+                var response = await FetchService.Instance.PostAsync<Trip>($"{GlobalConfig.BASE_URL}/trip", newTrip);
+
+                if (response.Success)
                 {
-                    // Add new trip
-                    await FetchService.Instance.PostAsync<Trip>($"{GlobalConfig.BASE_URL}/trip", trip);
-                    MessageBox.Show("Trip đã được thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Chuyến đi đã được thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    // Update existing trip
-                    await FetchService.Instance.PutAsync<Trip>($"{GlobalConfig.BASE_URL}/trip/{_tripId}", trip);
-                    MessageBox.Show("Trip đã được cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Lỗi khi thêm chuyến đi: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi lưu Trip: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task UpdateTripAsync()
+        {
+            try
+            {
+                if (!ValidateForm())
+                {
+                    MessageBox.Show("Vui lòng kiểm tra lại thông tin đã nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var updatedTrip = new Trip
+                {
+                    TripID = _tripId,
+                    TourID = _tourId,
+                    Price = decimal.Parse(txtPrice.Text),
+                    StartDate = dtpStartDate.Value,
+                    EndDate = dtpEndDate.Value,
+                    Distance = double.Parse(txtDistance.Text),
+                    MaxGuests = (int)numMaxGuests.Value
+                };
+
+                var response = await FetchService.Instance.PutAsync<Trip>($"{GlobalConfig.BASE_URL}/trip/{_tripId}", updatedTrip);
+
+                if (response.Success)
+                {
+                    MessageBox.Show("Chuyến đi đã được cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi khi cập nhật chuyến đi: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private bool ValidateForm()
         {
-            return !string.IsNullOrWhiteSpace(txtPrice.Text)
-                && decimal.TryParse(txtPrice.Text, out _)
-                && !string.IsNullOrWhiteSpace(txtDistance.Text)
-                && decimal.TryParse(txtDistance.Text, out _)
-                && dtpStartDate.Value <= dtpEndDate.Value;
+            if (!decimal.TryParse(txtPrice.Text, out decimal price) || price <= 0 || price > 99999999999999.99m)
+            {
+                MessageBox.Show("Giá không hợp lệ! Giá phải lớn hơn 0 và không vượt quá 99 nghìn tỷ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (!double.TryParse(txtDistance.Text, out double distance) || distance <= 0 || distance > 10000000.0)
+            {
+                MessageBox.Show("Khoảng cách không hợp lệ! Khoảng cách phải lớn hơn 0 và không vượt quá 10 triệu km.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (dtpStartDate.Value > dtpEndDate.Value)
+            {
+                MessageBox.Show("Ngày bắt đầu phải trước hoặc bằng ngày kết thúc.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (_tourId == Guid.Empty)
+            {
+                MessageBox.Show("Vui lòng chọn một Tour từ danh sách.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (numMaxGuests.Value <= 0)
+            {
+                MessageBox.Show("Số khách tối đa phải lớn hơn 0.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            return true;
         }
 
-        private async Task LoadBookingsForTripAsync(Guid tripId)
-        {
-            try
-            {
-                var bookings = await FetchService.Instance.GetAsync<List<Booking>>($"{GlobalConfig.BASE_URL}/booking/trip/{tripId}");
-
-                listViewBookings.Items.Clear();
-                foreach (var booking in bookings)
-                {
-                    ListViewItem item = new ListViewItem(booking.BookingID.ToString())
-                    {
-                        SubItems = {
-                            booking.UserID.ToString(),
-                            booking.BookingDate.ToShortDateString(),
-                            booking.NumberOfGuests.ToString(),
-                            booking.TotalPrice.ToString("C")
-                        },
-                        Tag = booking
-                    };
-
-                    listViewBookings.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi tải danh sách Booking: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
     }
 }

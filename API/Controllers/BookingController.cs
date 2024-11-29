@@ -21,88 +21,142 @@ namespace API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Booking>> GetBookings()
         {
-            var bookings = _bookingService.GetBookings();
-            return Ok(bookings);
+            try
+            {
+                var bookings = _bookingService.GetBookings();
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message );
+            }
         }
 
         [HttpGet("{id}")]
         public ActionResult<Booking> GetBookingById(Guid id)
         {
-            var booking = _bookingService.GetBookingById(id);
-
-            if (booking == null)
+            try
             {
-                return NotFound();
-            }
+                var booking = _bookingService.GetBookingById(id);
 
-            return Ok(booking);
+                if (booking == null)
+                {
+                    return NotFound("Không tìm thấy booking với ID cung cấp.");
+                }
+
+                return Ok(booking);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest( ex.Message );
+            }
         }
 
         [HttpPost]
         public ActionResult AddBooking(Booking booking)
         {
-            _bookingService.AddBooking(booking);
-            return Ok();
+            try
+            {
+                _bookingService.AddBooking(booking);
+                return Ok(booking);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
         public ActionResult UpdateBooking(Guid id, Booking booking)
         {
-            if (id != booking.BookingID)
+            try
             {
-                return BadRequest();
-            }
+                if (id != booking.BookingID)
+                {
+                    return BadRequest("ID không khớp với thông tin booking.");
+                }
 
-            _bookingService.UpdateBooking(booking);
-            return NoContent();
+                _bookingService.UpdateBooking(booking);
+                return Ok(booking);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteBooking(Guid id)
         {
-            _bookingService.DeleteBooking(id);
-            return NoContent();
+            try
+            {
+                _bookingService.DeleteBooking(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message );
+            }
         }
 
-    
         [HttpGet("user/{userId}")]
         public ActionResult<IEnumerable<Booking>> FindBookingsByUserId(Guid userId)
         {
-            var bookings = _bookingService.FindBookingsByUserId(userId);
-
-            if (bookings == null)
+            try
             {
-                return NotFound();
-            }
+                var bookings = _bookingService.FindBookingsByUserId(userId);
 
-            return Ok(bookings);
+                if (bookings == null || !bookings.Any())
+                {
+                    return NotFound("Không tìm thấy booking nào của người dùng này." );
+                }
+
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message );
+            }
         }
 
-       
         [HttpGet("trip/{tripId}")]
         public ActionResult<IEnumerable<Booking>> FindBookingsByTripId(Guid tripId)
         {
-            var bookings = _bookingService.FindBookingsByTripId(tripId);
-
-            if (bookings == null)
+            try
             {
-                return NotFound();
-            }
+                var bookings = _bookingService.FindBookingsByTripId(tripId);
 
-            return Ok(bookings);
+                if (bookings == null || !bookings.Any())
+                {
+                    return NotFound(new { Message = "Không tìm thấy booking nào cho chuyến đi này." });
+                }
+
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest( ex.Message );
+            }
         }
 
         [HttpGet("date")]
         public ActionResult<IEnumerable<Booking>> FindBookings([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
         {
-            var bookings = _bookingService.FindBookings(startDate, endDate);
-
-            if (bookings == null)
+            try
             {
-                return NotFound();
-            }
+                var bookings = _bookingService.FindBookings(startDate, endDate);
 
-            return Ok(bookings);
+                if (bookings == null || !bookings.Any())
+                {
+                    return NotFound(new { Message = "Không tìm thấy booking nào trong khoảng thời gian được cung cấp." });
+                }
+
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

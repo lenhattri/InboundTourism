@@ -26,7 +26,8 @@ namespace Views.Navigation
             _navigationService.RegisterView("ChangeTour", () => new ChangeTourControl());
             _navigationService.RegisterView("TableTrip", () => new TripListControl(_navigationService));
             _navigationService.RegisterView("ChangeTrip", () => new ChangeTripControl());
-
+            _navigationService.RegisterView("TableUser", () => new UserListControl(_navigationService));
+            _navigationService.RegisterView("ChangeUser",() => new ChangeUserControl());
             //Authentication
             _navigationService.RegisterView("Auth", () => new AuthControl(_navigationService));
             _navigationService.RegisterView("Loading", () => new LoadingControl());

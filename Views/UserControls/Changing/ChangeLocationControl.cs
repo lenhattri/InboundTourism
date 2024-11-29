@@ -13,20 +13,16 @@ namespace Views.UserControls.Changing
         private Guid _locationId;
 
         public ChangeLocationControl()
-
         {
-
             InitializeComponent();
             btnChange.Visible = false;
             btnAdd.Visible = false;
             btnChange.Click += async (sender, e) => await BtnChange_Click(sender, e);
-
+            btnAdd.Click += async (sender, e) => await BtnAdd_Click(sender, e);
         }
-
 
         public void ReceiveParameter(object parameter)
         {
-
             if (parameter is Location location)
             {
                 _locationId = location.LocationID;
@@ -35,7 +31,6 @@ namespace Views.UserControls.Changing
                 txtCity.Text = location.City;
                 txtCountry.Text = location.Country;
                 btnChange.Visible = true;
-
             }
             else
             {
@@ -47,7 +42,6 @@ namespace Views.UserControls.Changing
         {
             try
             {
-
                 var location = new Location
                 {
                     LocationID = _locationId,
@@ -57,31 +51,27 @@ namespace Views.UserControls.Changing
                     Country = txtCountry.Text
                 };
 
+                var response = await FetchService.Instance.PutAsync<Location>($"{GlobalConfig.BASE_URL}/location/{_locationId}", location);
 
-                var result = await FetchService.Instance.PutAsync<Location>($"{GlobalConfig.BASE_URL}/{_locationId}", location);
-
-
-                MessageBox.Show("Location đã được cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (response.Success)
+                {
+                    MessageBox.Show("Location đã được cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi khi cập nhật Location: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-
-                MessageBox.Show($"Lỗi khi cập nhật Location: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-
-
-        private void ChangeLocationControl_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void btnAdd_Click(object sender, EventArgs e)
+        private async Task BtnAdd_Click(object sender, EventArgs e)
         {
             try
             {
-
                 var location = new Location
                 {
                     LocationName = txtLocationName.Text,
@@ -90,16 +80,26 @@ namespace Views.UserControls.Changing
                     Country = txtCountry.Text
                 };
 
+                var response = await FetchService.Instance.PostAsync<Location>($"{GlobalConfig.BASE_URL}/location", location);
 
-                var result = await FetchService.Instance.PostAsync<Location>($"{GlobalConfig.BASE_URL}/location", location);
-
-
-                MessageBox.Show("Location đã được thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (response.Success)
+                {
+                    MessageBox.Show("Location đã được thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi khi thêm Location: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi thêm Location: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void ChangeLocationControl_Load(object sender, EventArgs e)
+        {
+            // Load logic if necessary
         }
     }
 }

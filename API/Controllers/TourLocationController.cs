@@ -42,7 +42,7 @@ namespace API.Controllers
         public ActionResult AddTourLocation(TourLocation tourLocation)
         {
             _tourLocationService.AddTourLocation(tourLocation);
-            return Ok();
+            return Ok(tourLocation);
         }
 
         [HttpPut("{tourId}/{locationId}")]
@@ -54,7 +54,7 @@ namespace API.Controllers
             }
 
             _tourLocationService.UpdateTourLocation(tourLocation);
-            return NoContent();
+            return Ok(tourLocation);
         }
 
         [HttpDelete("{tourId}/{locationId}")]
@@ -78,7 +78,6 @@ namespace API.Controllers
             return Ok(tourLocations);
         }
 
-        // New Endpoint: Find by LocationId
         [HttpGet("location/{locationId}")]
         public ActionResult<IEnumerable<TourLocation>> FindByLocationId(Guid locationId)
         {

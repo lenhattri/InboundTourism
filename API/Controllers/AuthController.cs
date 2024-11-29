@@ -1,4 +1,5 @@
 ﻿using API.DTO;
+using Base.Utils.Hash;
 using BLL.Interfaces;
 using Core.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -20,55 +21,48 @@ namespace API.Controllers
         [HttpPost("login")]
         public ActionResult Login(LoginRequest req)
         {
-            var user = _authService.Login(req.Email, req.Password);
-            if (user == null)
+            try
             {
-                return Unauthorized(new { message = "Email hoặc mật khẩu không chính xác." , status = "0" });
-            }
+                var user = _authService.Login(req.Email, req.Password);
 
-            return Ok(new
-            {
-                message = "Đăng nhập thành công.",
-                
-                user = new
+                if (user == null)
                 {
-                    user.UserID,
-                    user.Email,
-                    user.FullName,
-                    user.Role
+                    return Unauthorized(new { message = "Email hoặc mật khẩu không chính xác.", status = "0" });
                 }
-            });
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPost("register")]
         public ActionResult Register(RegisterRequest req)
         {
-            var newUser = new User
+            try
             {
-                FullName = req.FullName,
-                PhoneNumber = req.PhoneNumber,
-                Email = req.Email,
-                Password = req.Password,
-                Address = req.Address,
-
-            };
-
-            if (!_authService.Register(newUser))
-            {
-                return Conflict(new { message = "Email đã được sử dụng." });
-            }
-
-            return Ok(new
-            {
-                message = "Đăng ký thành công.",
-                user = new
+                var newUser = new User
                 {
-                    newUser.UserID,
-                    newUser.Email,
-                    newUser.FullName,
-                    newUser.Role
+                    FullName = req.FullName,
+                    PhoneNumber = req.PhoneNumber,
+                    Email = req.Email,
+                    Password = req.Password,
+                    Address = req.Address,
+                };
+
+                if (!_authService.Register(newUser))
+                {
+                    return Conflict("Email đã được sử dụng." );
                 }
-            });
+
+                return Ok(newUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest( ex.Message);
+            }
         }
     }
 }

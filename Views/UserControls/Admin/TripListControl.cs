@@ -54,13 +54,20 @@ namespace Views.UserControls.Admin
         {
             try
             {
-                // Fetch trips data
-                var trips = await FetchService.Instance.GetAsync<List<Trip>>($"{GlobalConfig.BASE_URL}/trip");
-                dataGridView1.DataSource = trips;
+                var response = await FetchService.Instance.GetAsync<List<Trip>>($"{GlobalConfig.BASE_URL}/trip");
+
+                if (response.Success)
+                {
+                    dataGridView1.DataSource = response.Data;
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi khi tải danh sách trips: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách trips: {ex.Message}");
+                MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -71,12 +78,21 @@ namespace Views.UserControls.Admin
             {
                 try
                 {
-                    await FetchService.Instance.DeleteAsync($"{GlobalConfig.BASE_URL}/trip/{tripId}");
-                    await LoadTripsAsync();
+                    var response = await FetchService.Instance.DeleteAsync($"{GlobalConfig.BASE_URL}/trip/{tripId}");
+
+                    if (response.Success)
+                    {
+                        await LoadTripsAsync();
+                        MessageBox.Show("Trip đã được xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Lỗi khi xóa trip: {response.ErrorMessage}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi xóa trip: {ex.Message}");
+                    MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

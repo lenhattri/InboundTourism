@@ -40,7 +40,7 @@ namespace API.Controllers
         public ActionResult AddLocation(Location location)
         {
             _locationService.AddLocation(location);
-            return Ok();
+            return Ok(location);
         }
 
         [HttpPut("{id}")]
@@ -52,7 +52,7 @@ namespace API.Controllers
             }
 
             _locationService.UpdateLocation(location);
-            return NoContent();
+            return Ok(location);
         }
 
         [HttpDelete("{id}")]
