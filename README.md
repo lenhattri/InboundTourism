@@ -7,7 +7,8 @@
 
 - Winform .NET Core
 - ASP.NET Core API
-- Entity Framework Core
+- ADO.NET
+- ASP.NET Core MVC
 
 
 - Core : Xác định các cấu trúc(khung) của các Thực thể(Từ đây gọi là Entity)
