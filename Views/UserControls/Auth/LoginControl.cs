@@ -2,12 +2,13 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Base.Utils.Fetch;
-using API.DTO; // Assuming the LoginRequest DTO is defined here
+using API.DTO; 
 using Base.Context;
 using Views.Forms;
 using Core.Enums;
 using Core.Entities;
 using Base.Config;
+
 namespace Views.UserControls.Auth
 {
     public partial class LoginControl : UserControl
@@ -15,7 +16,7 @@ namespace Views.UserControls.Auth
         public LoginControl()
         {
             InitializeComponent();
-            txtPassword.PasswordChar = '●';
+            txtPassword.PasswordChar = '●'; // Đặt ký tự mật khẩu là '●'
         }
 
         private async void BtnLogin_Click(object sender, EventArgs e)
@@ -23,14 +24,14 @@ namespace Views.UserControls.Auth
             string email = txtEmail.Text.Trim();
             string password = txtPassword.Text;
 
-            // Validate email format
+            // Kiểm tra định dạng email
             if (string.IsNullOrEmpty(email) || !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 MessageBox.Show("Vui lòng nhập email hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validate password
+            // Kiểm tra mật khẩu
             if (string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Vui lòng nhập mật khẩu.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -39,25 +40,25 @@ namespace Views.UserControls.Auth
 
             try
             {
-                // Prepare the login request data
+                // Chuẩn bị dữ liệu yêu cầu đăng nhập
                 var loginRequest = new LoginRequest
                 {
                     Email = email,
                     Password = password
                 };
 
-                // Call the API for login
+                // Gọi API để đăng nhập
                 var response = await FetchService.Instance.PostAsync<User>($"{GlobalConfig.BASE_URL}/auth/login", loginRequest);
 
-                // Check if the API response is successful
+                // Kiểm tra phản hồi từ API
                 if (response.Success)
                 {
-                    var userRole = response.Data.Role; // Assuming the role is returned as part of the response
+                    var userRole = response.Data.Role; // Giả sử vai trò được trả về trong phản hồi
 
-                    // Set user data in the context
+                    // Thiết lập dữ liệu người dùng trong context
                     UserContext.Instance.SetUserData(response.Data.FullName, userRole, email);
 
-                    // Open the appropriate form based on user role
+                    // Mở form phù hợp dựa trên vai trò người dùng
                     if (userRole == Role.Customer)
                     {
                         var customerForm = new CustomerForm();
@@ -69,7 +70,7 @@ namespace Views.UserControls.Auth
                         mainForm.Show();
                     }
 
-                    // Close the current login form
+                    // Đóng form đăng nhập hiện tại
                     ParentForm?.Hide();
                 }
                 else

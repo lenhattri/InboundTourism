@@ -1,21 +1,21 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace BLL.Services
 {
     public class TripService : ITripService
     {
         private readonly ITripRepository _tripRepository;
-        private readonly ITourRepository _tourRepository; // Thêm repository của Tour
+        private readonly ITourRepository _tourRepository;
+        private readonly IBookingRepository _bookingRepository;
 
-        public TripService(ITripRepository tripRepository, ITourRepository tourRepository)
+        public TripService(ITripRepository tripRepository, ITourRepository tourRepository, IBookingRepository bookingRepository)
         {
             _tripRepository = tripRepository;
             _tourRepository = tourRepository;
+            _bookingRepository = bookingRepository;
         }
 
         public IEnumerable<Trip> GetTrips()
@@ -62,7 +62,13 @@ namespace BLL.Services
 
         public void DeleteTrip(Guid tripId)
         {
+            var bookings = _bookingRepository.FindByTripId(tripId);
+            foreach (var booking in bookings)
+            {
+                _bookingRepository.Delete(booking.TripID);
+            }
             _tripRepository.Delete(tripId);
+
         }
 
         public IEnumerable<Trip> FindTripsByTourId(Guid tourId)
@@ -77,7 +83,7 @@ namespace BLL.Services
             return FormatTripsWithTourName(trips);
         }
 
-        // Private helper methods
+    
 
         private IEnumerable<Trip> FormatTripsWithTourName(IEnumerable<Trip> trips)
         {

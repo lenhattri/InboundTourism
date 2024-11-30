@@ -24,7 +24,7 @@ namespace Views.Forms
             Router router = new Router(_navigationService);
             router.RegisterViews();
             lbName.Text = UserContext.Instance.Username;
-            _navigationService.NavigateTo("Loading");
+            _navigationService.NavigateTo("Dashboard");
 
         }
 

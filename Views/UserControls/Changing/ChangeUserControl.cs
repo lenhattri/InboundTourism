@@ -14,9 +14,12 @@ namespace Views.UserControls.Changing
     {
         private Guid _userId;
         private Role role;
+
+        private List<string> roles; 
         public ChangeUserControl()
         {
             InitializeComponent();
+            roles = new List<string> { "Admin", "Customer" };
             btnChange.Visible = false;
             btnAdd.Visible = false;
 
@@ -27,19 +30,27 @@ namespace Views.UserControls.Changing
         }
         private void CbRole_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedRole = cbRole.SelectedItem.ToString();
-            if (selectedRole == "Admin")
+            switch (cbRole.SelectedIndex)
             {
-                role = Role.Admin;
-            }
-            else if (selectedRole == "Customer")
-            {
-                role = Role.Customer;
+                case 0:
+                    role = Role.Admin;
+                    break;
+                case 1:
+                    role = Role.Customer;
+                    break;
+                default:
+                    role = Role.Customer;
+                    break;
             }
         }
 
         public void ReceiveParameter(object parameter)
         {
+            if (cbRole.DataSource == null)
+            {
+                roles = new List<string> { "Admin", "Customer" };
+                cbRole.DataSource = roles;
+            }
             if (parameter is User user)
             {
                 string roleDisplay = user.Role == Role.Admin ? "Admin" : "Customer";
@@ -50,7 +61,14 @@ namespace Views.UserControls.Changing
                 txtPassword.Enabled = false;
                 txtAddress.Text = user.Address;
 
-                cbRole.SelectedItem = roleDisplay;
+                if (user.Role == Role.Admin)
+                {
+                    cbRole.SelectedIndex = 0; 
+                }
+                else if (user.Role == Role.Customer)
+                {
+                    cbRole.SelectedIndex = 1; 
+                }
                 role = user.Role;
                 btnChange.Visible = true;
             }

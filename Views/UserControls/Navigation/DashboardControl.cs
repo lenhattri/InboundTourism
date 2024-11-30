@@ -42,5 +42,10 @@ namespace Views.UserControls.Navigation
         {
             _navigationService.NavigateTo("TableBooking");
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

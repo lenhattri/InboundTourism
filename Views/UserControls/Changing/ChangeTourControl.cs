@@ -126,14 +126,42 @@ namespace Views.UserControls.Changing
                 .ToList();
         }
 
+        private bool ValidateForm()
+        {
+            if (string.IsNullOrWhiteSpace(txtTourName.Text))
+            {
+                MessageBox.Show("Tên tour không được để trống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTourName.Focus();
+                return false;
+            }
+
+            if (GetSelectedLocationIds().Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn ít nhất một địa điểm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                listView1.Focus();
+                return false;
+            }
+
+            if (txtDescription.Text.Length > 500)
+            {
+                MessageBox.Show("Mô tả không được vượt quá 500 ký tự!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDescription.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
         private async Task AddTourAsync()
         {
             try
             {
+                if (!ValidateForm()) return;
+
                 var newTour = new TourCreateRequest
                 {
-                    TourName = txtTourName.Text,
-                    Description = txtDescription.Text,
+                    TourName = txtTourName.Text.Trim(),
+                    Description = txtDescription.Text.Trim(),
                     LocationIds = GetSelectedLocationIds()
                 };
 
@@ -158,10 +186,12 @@ namespace Views.UserControls.Changing
         {
             try
             {
+                if (!ValidateForm()) return;
+
                 var updatedTour = new TourCreateRequest
                 {
-                    TourName = txtTourName.Text,
-                    Description = txtDescription.Text,
+                    TourName = txtTourName.Text.Trim(),
+                    Description = txtDescription.Text.Trim(),
                     LocationIds = GetSelectedLocationIds()
                 };
 

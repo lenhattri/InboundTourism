@@ -51,16 +51,24 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateTour(Guid id, Tour tour)
+        public ActionResult UpdateTour(Guid id, [FromBody] TourCreateRequest request)
         {
-            if (id != tour.TourID)
+            if (request == null)
             {
-                return BadRequest();
+                return BadRequest("Thông tin không hợp lệ.");
             }
 
-            _tourService.UpdateTour(tour);
+            var tour = new Tour
+            {
+                TourID = id,
+                TourName = request.TourName,
+                Description = request.Description
+            };
+
+            _tourService.UpdateTour(tour, request.LocationIds);
             return Ok(tour);
         }
+
 
         [HttpDelete("{id}")]
         public ActionResult DeleteTour(Guid id)

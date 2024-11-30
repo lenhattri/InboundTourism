@@ -11,11 +11,13 @@ namespace BLL.Services
     {
         private readonly ITourRepository _tourRepository;
         private readonly ITourLocationRepository _tourLocationRepository;
+        private readonly ITripRepository _tripRepository;
 
-        public TourService(ITourRepository tourRepository, ITourLocationRepository tourLocationRepository)
+        public TourService(ITourRepository tourRepository, ITourLocationRepository tourLocationRepository,ITripRepository tripRepository)
         {
             _tourRepository = tourRepository;
             _tourLocationRepository = tourLocationRepository;
+            _tripRepository = tripRepository;
         }
 
         public IEnumerable<Tour> GetTours()
@@ -46,10 +48,31 @@ namespace BLL.Services
             }
         }
 
-        public void UpdateTour(Tour tour)
+        public void UpdateTour(Tour tour, List<Guid> locationIds)
         {
             _tourRepository.Update(tour);
+
+            //Xóa các TourLocation cũ
+            var existingTourLocations = _tourLocationRepository.FindByTourId(tour.TourID);
+            foreach (var tourLocation in existingTourLocations)
+            {
+                _tourLocationRepository.Delete(tourLocation.TourID, tourLocation.LocationID);
+            }
+
+            //Thêm TourLocation mới
+            int index = 0;
+            foreach (var locationId in locationIds)
+            {
+                var tourLocation = new TourLocation
+                {
+                    TourID = tour.TourID,
+                    LocationID = locationId,
+                    LocationIndex = index++
+                };
+                _tourLocationRepository.Add(tourLocation);
+            }
         }
+
 
         public void DeleteTour(Guid id)
         {
@@ -58,7 +81,11 @@ namespace BLL.Services
             {
                 _tourLocationRepository.Delete(tourLocation.TourID, tourLocation.LocationID);
             }
-
+            var trips = _tripRepository.FindByTourId(id);
+            foreach (var trip in trips)
+            {
+                _tripRepository.Delete(trip.TripID);
+            }
             _tourRepository.Delete(id);
         }
 

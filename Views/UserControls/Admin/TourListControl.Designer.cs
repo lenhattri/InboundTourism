@@ -40,7 +40,7 @@
             // 
             btnDelete.BackColor = Color.PaleVioletRed;
             btnDelete.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(1214, 267);
+            btnDelete.Location = new Point(1098, 278);
             btnDelete.Margin = new Padding(4);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(149, 56);
@@ -54,7 +54,7 @@
             btnChange.BackColor = Color.SkyBlue;
             btnChange.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnChange.ForeColor = SystemColors.Desktop;
-            btnChange.Location = new Point(1214, 169);
+            btnChange.Location = new Point(1098, 180);
             btnChange.Margin = new Padding(4);
             btnChange.Name = "btnChange";
             btnChange.Size = new Size(149, 56);
@@ -85,14 +85,14 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.ShowCellErrors = false;
-            dataGridView1.Size = new Size(1194, 650);
+            dataGridView1.Size = new Size(1066, 650);
             dataGridView1.TabIndex = 10;
             // 
             // btnAdd
             // 
             btnAdd.BackColor = Color.LimeGreen;
             btnAdd.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(1214, 74);
+            btnAdd.Location = new Point(1098, 85);
             btnAdd.Margin = new Padding(4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(149, 56);

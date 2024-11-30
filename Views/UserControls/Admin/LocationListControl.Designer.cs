@@ -40,7 +40,7 @@
             // 
             btnAdd.BackColor = Color.LimeGreen;
             btnAdd.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAdd.Location = new Point(1300, 74);
+            btnAdd.Location = new Point(1048, 88);
             btnAdd.Margin = new Padding(4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(149, 56);
@@ -71,7 +71,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.ShowCellErrors = false;
-            dataGridView1.Size = new Size(1235, 650);
+            dataGridView1.Size = new Size(964, 650);
             dataGridView1.TabIndex = 6;
             dataGridView1.CellClick += dataGridView1_CellClick;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
@@ -81,7 +81,7 @@
             btnChange.BackColor = Color.SkyBlue;
             btnChange.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnChange.ForeColor = SystemColors.Desktop;
-            btnChange.Location = new Point(1300, 169);
+            btnChange.Location = new Point(1048, 183);
             btnChange.Margin = new Padding(4);
             btnChange.Name = "btnChange";
             btnChange.Size = new Size(149, 56);
@@ -94,7 +94,7 @@
             // 
             btnDelete.BackColor = Color.PaleVioletRed;
             btnDelete.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(1300, 267);
+            btnDelete.Location = new Point(1048, 281);
             btnDelete.Margin = new Padding(4);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(149, 56);
@@ -112,7 +112,7 @@
             Controls.Add(dataGridView1);
             Controls.Add(btnAdd);
             Name = "LocationListControl";
-            Size = new Size(1472, 744);
+            Size = new Size(1237, 744);
             Load += LocationListControl_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

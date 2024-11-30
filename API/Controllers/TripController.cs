@@ -37,14 +37,15 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTrip(Trip trip)
+        public ActionResult AddTrip([FromBody] Trip trip)
         {
             _tripService.AddTrip(trip);
-            return Ok("Thêm thành công");
+            return Ok(trip); 
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateTrip(Guid id, Trip trip)
+       
+        public ActionResult UpdateTrip(Guid id, [FromBody] Trip trip)
         {
             if (id != trip.TripID)
             {
@@ -52,8 +53,9 @@ namespace API.Controllers
             }
 
             _tripService.UpdateTrip(trip);
-            return Ok("Cập nhật thành công");
+            return Ok(trip); 
         }
+
 
         [HttpDelete("{id}")]
         public ActionResult DeleteTrip(Guid id)

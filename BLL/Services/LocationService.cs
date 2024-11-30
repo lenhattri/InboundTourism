@@ -1,17 +1,21 @@
 ﻿using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
+using DAL.Repositories;
 
 namespace BLL.Services
 {
     public class LocationService : ILocationService
     {
         private readonly ILocationRepository _locationRepository;
+        private readonly ITourLocationRepository _tourLocationRepository;
 
-        public LocationService(ILocationRepository locationRepository)
+        public LocationService(ILocationRepository locationRepository, ITourLocationRepository tourLocationRepository)
         {
             _locationRepository = locationRepository;
+            _tourLocationRepository = tourLocationRepository;
         }
+
 
         public IEnumerable<Location> GetLocations()
         {
@@ -30,6 +34,12 @@ namespace BLL.Services
 
         public void DeleteLocation(Guid id)
         {
+
+            var existingTourLocations = _tourLocationRepository.FindByLocationId(id);
+            foreach (var tourLocation in existingTourLocations)
+            {
+                _tourLocationRepository.Delete(tourLocation.TourID, tourLocation.LocationID);
+            }
             _locationRepository.Delete(id);
         }
 

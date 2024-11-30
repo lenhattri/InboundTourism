@@ -60,7 +60,7 @@
             lbName.Font = new Font("Cascadia Code", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lbName.ForeColor = Color.White;
             lbName.ImageAlign = ContentAlignment.BottomLeft;
-            lbName.Location = new Point(50, 118);
+            lbName.Location = new Point(50, 174);
             lbName.Name = "lbName";
             lbName.Size = new Size(105, 33);
             lbName.TabIndex = 3;
@@ -71,7 +71,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.SlateBlue;
-            ClientSize = new Size(1347, 610);
+            ClientSize = new Size(1546, 791);
             Controls.Add(lbName);
             Controls.Add(btnTables);
             Controls.Add(panelContainer);

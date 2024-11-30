@@ -9,7 +9,7 @@ namespace BLL.Interfaces
         IEnumerable<Tour> GetTours();
         Tour GetTour(Guid id);
         void AddTour(Tour tour, List<Guid> locationIds);
-        void UpdateTour(Tour tour);
+        public void UpdateTour(Tour tour, List<Guid> locationIds);
         void DeleteTour(Guid id);
         IEnumerable<Tour> FindTours(string tourName = null);
     }

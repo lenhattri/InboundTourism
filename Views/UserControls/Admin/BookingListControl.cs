@@ -6,6 +6,7 @@ using Base.Utils.Fetch;
 using Core.Entities;
 using Base.Config;
 using Views.Interfaces;
+using Views.DTO;
 
 namespace Views.UserControls.Admin
 {
@@ -58,14 +59,14 @@ namespace Views.UserControls.Admin
 
                 if (response.Success)
                 {
-                   
-                    var bookingsWithDetails = new List<dynamic>();
+
+                    var bookingsWithDetails = new List<BookingViewModel>();
                     foreach (var booking in response.Data)
                     {
                         var trip = await FetchService.Instance.GetAsync<Trip>($"{GlobalConfig.BASE_URL}/trip/{booking.TripID}");
                         var user = await FetchService.Instance.GetAsync<User>($"{GlobalConfig.BASE_URL}/user/{booking.UserID}");
 
-                        bookingsWithDetails.Add(new
+                        bookingsWithDetails.Add(new BookingViewModel
                         {
                             BookingID = booking.BookingID,
                             TripName = trip.Data?.TourName ?? "Unknown Trip",
@@ -75,8 +76,8 @@ namespace Views.UserControls.Admin
                             TotalPrice = booking.TotalPrice
                         });
                     }
-
                     dataGridView1.DataSource = bookingsWithDetails;
+
                 }
                 else
                 {
@@ -125,13 +126,14 @@ namespace Views.UserControls.Admin
             if (dataGridView1.SelectedRows.Count == 0) return;
 
             var selectedRow = dataGridView1.SelectedRows[0];
-            var booking = selectedRow.DataBoundItem as Booking;
+            var booking = selectedRow.DataBoundItem as BookingViewModel;
 
             if (booking != null)
             {
                 _navigationService.NavigateTo("ChangeBooking", booking);
             }
         }
+
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
