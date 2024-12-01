@@ -40,7 +40,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Cascadia Mono", 90F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.Plum;
-            label1.Location = new Point(108, 240);
+            label1.Location = new Point(264, 284);
             label1.Name = "label1";
             label1.Size = new Size(963, 198);
             label1.TabIndex = 0;
@@ -49,7 +49,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources._物語シリーズ_まよいキャンディー___TosTosのイラスト___pixiv;
-            pictureBox1.Location = new Point(354, 89);
+            pictureBox1.Location = new Point(510, 133);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(313, 148);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;

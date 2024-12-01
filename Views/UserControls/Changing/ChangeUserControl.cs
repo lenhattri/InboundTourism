@@ -14,7 +14,7 @@ namespace Views.UserControls.Changing
     {
         private Guid _userId;
         private Role role;
-
+        private string _password;
         private List<string> roles; 
         public ChangeUserControl()
         {
@@ -58,6 +58,7 @@ namespace Views.UserControls.Changing
                 txtFullname.Text = user.FullName;
                 txtPhoneNumber.Text = user.PhoneNumber;
                 txtEmail.Text = user.Email;
+                _password = user.Password;
                 txtPassword.Enabled = false;
                 txtAddress.Text = user.Address;
 
@@ -89,7 +90,7 @@ namespace Views.UserControls.Changing
                     FullName = txtFullname.Text,
                     PhoneNumber = txtPhoneNumber.Text,
                     Email = txtEmail.Text,
-                    Password = txtPassword.Text,
+                    Password = _password,
                     Address = txtAddress.Text,
                     Role = role
                 };
@@ -99,6 +100,8 @@ namespace Views.UserControls.Changing
                       $"- SĐT: {user.PhoneNumber}\n" +
                       $"- Email: {user.Email}\n" +
                       $"- Địa chỉ: {user.Address}\n" +
+                      
+                      
                       $"- Vai trò: {role}",
                       "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 var response = await FetchService.Instance.PutAsync<User>($"{GlobalConfig.BASE_URL}/user/{_userId}", user);

@@ -134,6 +134,7 @@
             listUser.Size = new Size(435, 176);
             listUser.TabIndex = 28;
             listUser.UseCompatibleStateImageBehavior = false;
+        
             // 
             // txtTripFilter
             // 

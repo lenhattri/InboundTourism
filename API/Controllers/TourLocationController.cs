@@ -64,7 +64,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        // New Endpoint: Find by TourId
+
         [HttpGet("tour/{tourId}")]
         public ActionResult<IEnumerable<TourLocation>> FindByTourId(Guid tourId)
         {

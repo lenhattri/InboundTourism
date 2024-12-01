@@ -12,11 +12,11 @@ using Views.Navigation;
 
 namespace Views.Forms
 {
-    public partial class LoginForm : Form
+    public partial class Login : Form
     {
         private readonly INavigationService _navigationService;
 
-        public LoginForm()
+        public Login()
         {
             InitializeComponent();
             _navigationService = new NavigationService(panelContainer);

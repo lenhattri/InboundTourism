@@ -41,7 +41,7 @@
             // 
             btnUser.BackColor = Color.Violet;
             btnUser.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnUser.Location = new Point(209, 212);
+            btnUser.Location = new Point(269, 312);
             btnUser.Name = "btnUser";
             btnUser.Size = new Size(157, 80);
             btnUser.TabIndex = 4;
@@ -53,7 +53,7 @@
             // 
             btnTour.BackColor = Color.Violet;
             btnTour.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnTour.Location = new Point(309, 345);
+            btnTour.Location = new Point(369, 445);
             btnTour.Name = "btnTour";
             btnTour.Size = new Size(161, 88);
             btnTour.TabIndex = 5;
@@ -65,7 +65,7 @@
             // 
             btnLocation.BackColor = Color.Violet;
             btnLocation.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnLocation.Location = new Point(441, 212);
+            btnLocation.Location = new Point(501, 312);
             btnLocation.Name = "btnLocation";
             btnLocation.Size = new Size(193, 80);
             btnLocation.TabIndex = 6;
@@ -77,7 +77,7 @@
             // 
             btnBooking.BackColor = Color.Violet;
             btnBooking.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnBooking.Location = new Point(705, 212);
+            btnBooking.Location = new Point(765, 312);
             btnBooking.Name = "btnBooking";
             btnBooking.Size = new Size(196, 80);
             btnBooking.TabIndex = 7;
@@ -89,7 +89,7 @@
             // 
             btnTrip.BackColor = Color.Violet;
             btnTrip.Font = new Font("Cascadia Mono", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnTrip.Location = new Point(581, 345);
+            btnTrip.Location = new Point(641, 445);
             btnTrip.Name = "btnTrip";
             btnTrip.Size = new Size(211, 88);
             btnTrip.TabIndex = 8;
@@ -101,7 +101,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Cascadia Code", 31.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(258, 33);
+            label1.Location = new Point(318, 133);
             label1.Name = "label1";
             label1.Size = new Size(606, 72);
             label1.TabIndex = 9;
@@ -112,7 +112,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Cascadia Code", 12F);
-            label2.Location = new Point(225, 120);
+            label2.Location = new Point(285, 220);
             label2.Name = "label2";
             label2.Size = new Size(648, 27);
             label2.TabIndex = 10;

@@ -11,6 +11,8 @@ namespace Views.UserControls.Changing
         private Guid _tourId;
         private List<Guid> _selectedLocationIds;
         private List<Location> _allLocations;
+        private List<ListViewItem> _checkedItemsInOrder;
+
 
         public ChangeTourControl()
         {
@@ -21,8 +23,9 @@ namespace Views.UserControls.Changing
             btnChange.Click += async (sender, e) => await UpdateTourAsync();
             btnChange.Visible = false;
             btnAdd.Visible = false;
+            _checkedItemsInOrder = new List<ListViewItem>();
 
-            // Sự kiện lọc theo từ khóa
+
             txtLocationFilter.TextChanged += (sender, e) => FilterLocations();
         }
 
@@ -211,5 +214,51 @@ namespace Views.UserControls.Changing
                 MessageBox.Show($"Lỗi không mong muốn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            if (e.Item.Checked)
+            {
+                // Nếu item được check, thêm vào danh sách
+                _checkedItemsInOrder.Add(e.Item);
+            }
+            else
+            {
+                // Nếu item bị uncheck, xóa khỏi danh sách
+                _checkedItemsInOrder.Remove(e.Item);
+            }
+
+            // Cập nhật hiển thị
+            UpdateCheckedItemsDisplay();
+        }
+        private void UpdateCheckedItemsDisplay()
+        {
+            // Reset tên hiển thị của tất cả các item
+            foreach (ListViewItem item in listView1.Items)
+            {
+                var location = _allLocations.FirstOrDefault(loc => loc.LocationID == (Guid)item.Tag);
+                if (location != null)
+                {
+                    item.Text = location.LocationName;
+                }
+            }
+
+            // Cập nhật tên hiển thị của các item được chọn với số thứ tự
+            for (int i = 0; i < _checkedItemsInOrder.Count; i++)
+            {
+                var item = _checkedItemsInOrder[i];
+                var location = _allLocations.FirstOrDefault(loc => loc.LocationID == (Guid)item.Tag);
+                if (location != null)
+                {
+                    item.Text = $"{i + 1}. {location.LocationName}";
+                }
+            }
+        }
+
     }
 }

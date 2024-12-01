@@ -150,6 +150,7 @@
             listView1.Size = new Size(406, 326);
             listView1.TabIndex = 25;
             listView1.UseCompatibleStateImageBehavior = false;
+       
             // 
             // label5
             // 

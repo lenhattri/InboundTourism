@@ -107,6 +107,8 @@
             listView1.Size = new Size(405, 298);
             listView1.TabIndex = 22;
             listView1.UseCompatibleStateImageBehavior = false;
+            listView1.ItemChecked += listView1_ItemChecked;
+            listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
             // 
             // label3
             // 

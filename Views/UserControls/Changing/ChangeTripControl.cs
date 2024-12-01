@@ -18,16 +18,21 @@ namespace Views.UserControls.Changing
             listView1.CheckBoxes = false;
             listView1.FullRowSelect = true;
             listView1.HideSelection = false;
+            listView1.Scrollable = true;
+            listView1.View = View.Details;
             btnAdd.Click += async (sender, e) => await AddTripAsync();
             btnChange.Click += async (sender, e) => await UpdateTripAsync();
             btnChange.Visible = false;
             btnAdd.Visible = false;
 
             listView1.SelectedIndexChanged += OnTourSelected;
+            listView1.ItemSelectionChanged += listView1_ItemSelectionChanged;
 
             // Kết nối sự kiện lọc với txtTourFilter
             txtTourFilter.TextChanged += (sender, e) => FilterTours();
         }
+
+       
 
         public async void ReceiveParameter(object parameter)
         {
@@ -79,9 +84,9 @@ namespace Views.UserControls.Changing
             listView1.Items.Clear();
             listView1.Columns.Clear();
 
-            listView1.Columns.Add("Tên Tour", 200);
-            listView1.Columns.Add("Mô tả", 300);
-            listView1.Columns.Add("Mã Tour", 150);
+            listView1.Columns.Add("Tên Tour", -2);
+            listView1.Columns.Add("Mô tả", -2);
+            listView1.Columns.Add("Mã Tour", -2);
 
             foreach (var tour in tours)
             {
@@ -92,15 +97,18 @@ namespace Views.UserControls.Changing
                 item.SubItems.Add(tour.Description);
                 item.SubItems.Add(tour.TourID.ToString());
 
+
                 if (tour.TourID == _tourId)
                 {
                     item.Selected = true;
+
                 }
 
                 listView1.Items.Add(item);
             }
 
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            UpdateTourItemStyles();
         }
 
         private void FilterTours()
@@ -115,6 +123,7 @@ namespace Views.UserControls.Changing
             ).ToList();
 
             PopulateListView(filteredTours); // Hiển thị danh sách đã lọc
+            UpdateTourItemStyles();
         }
 
         private void OnTourSelected(object sender, EventArgs e)
@@ -122,7 +131,7 @@ namespace Views.UserControls.Changing
             if (listView1.SelectedItems.Count > 0)
             {
                 _tourId = (Guid)listView1.SelectedItems[0].Tag;
-                MessageBox.Show($"Bạn đã chọn Tour: {listView1.SelectedItems[0].Text}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+               
             }
         }
 
@@ -235,9 +244,38 @@ namespace Views.UserControls.Changing
 
             return true;
         }
-
+        private void UpdateTourItemStyles()
+        {
+            foreach (ListViewItem item in listView1.Items)
+            {
+                if (item.Selected)
+                {
+                    item.BackColor = Color.LightBlue;
+                    item.Font = new Font(listView1.Font, FontStyle.Bold);
+                }
+                else
+                {
+                    item.BackColor = listView1.BackColor;
+                    item.Font = listView1.Font;
+                }
+            }
+        }
         private void ChangeTripControl_Load(object sender, EventArgs e)
         {
+        }
+
+        private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                e.Item.BackColor = Color.LightBlue;
+                e.Item.Font = new Font(listView1.Font, FontStyle.Bold);
+            }
+            else
+            {
+                e.Item.BackColor = listView1.BackColor;
+                e.Item.Font = listView1.Font;
+            }
         }
     }
 }

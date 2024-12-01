@@ -59,7 +59,6 @@ namespace Views.UserControls.Admin
 
                 if (response.Success)
                 {
-
                     var bookingsWithDetails = new List<BookingViewModel>();
                     foreach (var booking in response.Data)
                     {
@@ -69,15 +68,16 @@ namespace Views.UserControls.Admin
                         bookingsWithDetails.Add(new BookingViewModel
                         {
                             BookingID = booking.BookingID,
-                            TripName = trip.Data?.TourName ?? "Unknown Trip",
-                            UserName = user.Data?.FullName ?? "Unknown User",
+                            TripID = booking.TripID,           
+                            UserID = booking.UserID,           
+                            TripName = trip.Data?.TourName ?? "Tuyến không xác định",
+                            UserName = user.Data?.FullName ?? "Người dùng không xác định",
                             BookingDate = booking.BookingDate,
                             NumberOfGuests = booking.NumberOfGuests,
                             TotalPrice = booking.TotalPrice
                         });
                     }
                     dataGridView1.DataSource = bookingsWithDetails;
-
                 }
                 else
                 {

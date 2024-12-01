@@ -18,7 +18,7 @@ namespace BLL.Services
         {
             var user = _userService.GetUserByEmail(email);
             Console.WriteLine(user.ToString());
-            Console.WriteLine($"{user.Password}:{HashPassword.Hash(password)}");
+            Console.WriteLine($"{user.Password}hihi:{HashPassword.Hash(password)}");
 
             if (user == null || user.Password != HashPassword.Hash(password))
             {

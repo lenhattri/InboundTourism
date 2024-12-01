@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Views.DTO;
 namespace Views.UserControls.Changing
 {
     public partial class ChangeBookingControl : UserControl, IParameterReceiver
@@ -27,20 +27,57 @@ namespace Views.UserControls.Changing
 
             listUser.FullRowSelect = true;
             listUser.HideSelection = false;
+            listTrip.Scrollable = true;
+            listTrip.View = View.Details;
+            listUser.Scrollable = true;
+            listUser.View = View.Details;
+
 
             btnAdd.Click += async (sender, e) => await AddBookingAsync();
             btnChange.Click += async (sender, e) => await UpdateBookingAsync();
 
-            listTrip.SelectedIndexChanged += OnTripSelected;
-            listUser.SelectedIndexChanged += OnUserSelected;
+            
+            listTrip.ItemSelectionChanged += ListTrip_ItemSelectionChanged;
+            listUser.ItemSelectionChanged += ListUser_ItemSelectionChanged;
 
             txtTripFilter.TextChanged += (sender, e) => FilterTrips();
             txtUserFilter.TextChanged += (sender, e) => FilterUsers();
         }
 
+        private void ListTrip_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                _tripId = (Guid)e.Item.Tag; // Update selected Trip ID
+                e.Item.BackColor = Color.LightBlue;
+                e.Item.Font = new Font(listTrip.Font, FontStyle.Bold);
+            }
+            else
+            {
+                e.Item.BackColor = listTrip.BackColor;
+                e.Item.Font = listTrip.Font;
+            }
+        }
+
+        private void ListUser_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                _userId = (Guid)e.Item.Tag; // Update selected User ID
+                e.Item.BackColor = Color.LightGreen;
+                e.Item.Font = new Font(listUser.Font, FontStyle.Bold);
+            }
+            else
+            {
+                e.Item.BackColor = listUser.BackColor;
+                e.Item.Font = listUser.Font;
+            }
+        }
+
+
         public async void ReceiveParameter(object parameter)
         {
-            if (parameter is Booking booking)
+            if (parameter is BookingViewModel booking)
             {
                 _bookingId = booking.BookingID;
                 _tripId = booking.TripID;
@@ -54,6 +91,7 @@ namespace Views.UserControls.Changing
             {
                 btnAdd.Visible = true;
                 btnChange.Visible = false;
+                _tripId = Guid.Empty;
             }
 
             await LoadAllTripsAsync();
@@ -114,9 +152,9 @@ namespace Views.UserControls.Changing
         {
             listTrip.Items.Clear();
             listTrip.Columns.Clear();
-            listTrip.Columns.Add("Tên Chuyến Đi", 200);
-            listTrip.Columns.Add("Ngày Bắt Đầu", 150);
-            listTrip.Columns.Add("Ngày Kết Thúc", 150);
+            listTrip.Columns.Add("Tên Chuyến Đi", -2);
+            listTrip.Columns.Add("Ngày Bắt Đầu", -2);
+            listTrip.Columns.Add("Ngày Kết Thúc", -2);
 
             foreach (var trip in trips)
             {
@@ -126,22 +164,32 @@ namespace Views.UserControls.Changing
                 };
                 item.SubItems.Add(trip.StartDate.ToString("yyyy-MM-dd"));
                 item.SubItems.Add(trip.EndDate.ToString("yyyy-MM-dd"));
-
+               
+                // Apply style to the selected trip
                 if (trip.TripID == _tripId)
                 {
                     item.Selected = true;
+        // Make font bold
+                }
+                else
+                {
+                    // Reset style for non-selected items
+                    item.BackColor = listTrip.BackColor;
+                    item.Font = listTrip.Font;
                 }
 
                 listTrip.Items.Add(item);
+                UpdateTripItemStyles();
             }
         }
+
 
         private void PopulateUsers(List<User> users)
         {
             listUser.Items.Clear();
             listUser.Columns.Clear();
-            listUser.Columns.Add("Tên Người Dùng", 200);
-            listUser.Columns.Add("Email", 250);
+            listUser.Columns.Add("Tên Người Dùng", -2);
+            listUser.Columns.Add("Email", -2);
 
             foreach (var user in users)
             {
@@ -153,10 +201,12 @@ namespace Views.UserControls.Changing
 
                 if (user.UserID == _userId)
                 {
+
                     item.Selected = true;
                 }
 
                 listUser.Items.Add(item);
+                UpdateUserItemStyles();
             }
         }
 
@@ -170,6 +220,8 @@ namespace Views.UserControls.Changing
             ).ToList();
 
             PopulateTrips(filteredTrips);
+            UpdateTripItemStyles();
+
         }
 
         private void FilterUsers()
@@ -181,6 +233,7 @@ namespace Views.UserControls.Changing
             ).ToList();
 
             PopulateUsers(filteredUsers);
+            UpdateUserItemStyles();
         }
 
         private void OnTripSelected(object sender, EventArgs e)
@@ -300,5 +353,42 @@ namespace Views.UserControls.Changing
             var selectedTrip = _allTrips.FirstOrDefault(t => t.TripID == _tripId);
             return selectedTrip != null ? selectedTrip.Price * (int)numGuests.Value : 0;
         }
+
+
+        private void UpdateTripItemStyles()
+        {
+            foreach (ListViewItem item in listTrip.Items)
+            {
+                if (item.Selected)
+                {
+                    item.BackColor = Color.LightBlue;
+                    item.Font = new Font(listTrip.Font, FontStyle.Bold);
+                }
+                else
+                {
+                    item.BackColor = listTrip.BackColor;
+                    item.Font = listTrip.Font;
+                }
+            }
+        }
+        private void UpdateUserItemStyles()
+        {
+            foreach (ListViewItem item in listUser.Items)
+            {
+                if (item.Selected)
+                {
+                    item.BackColor = Color.LightBlue;
+                    item.Font = new Font(listUser.Font, FontStyle.Bold);
+                }
+                else
+                {
+                    item.BackColor = listUser.BackColor;
+                    item.Font = listUser.Font;
+                }
+            }
+        }
+
+
+       
     }
 }

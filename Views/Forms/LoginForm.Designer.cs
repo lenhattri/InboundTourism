@@ -1,6 +1,6 @@
 ﻿namespace Views.Forms
 {
-    partial class LoginForm
+    partial class Login
     {
         /// <summary>
         /// Required designer variable.
@@ -39,13 +39,14 @@
             panelContainer.TabIndex = 0;
             panelContainer.Paint += panel1_Paint;
             // 
-            // LoginForm
+            // Login
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(897, 510);
             Controls.Add(panelContainer);
-            Name = "LoginForm";
+            ImeMode = ImeMode.NoControl;
+            Name = "Login";
             Text = "LoginForm";
             ResumeLayout(false);
         }
