@@ -1,4 +1,4 @@
-﻿namespace Views.UserControls.Changing
+namespace Views.UserControls.Changing
 {
     partial class ChangeLocationControl
     {
@@ -38,6 +38,9 @@
             txtCountry = new TextBox();
             btnChange = new Button();
             btnAdd = new Button();
+            pictureBox1 = new PictureBox();
+            btnUpload = new Button();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // txtLocationName
@@ -109,7 +112,7 @@
             btnChange.BackColor = Color.SkyBlue;
             btnChange.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnChange.ForeColor = SystemColors.Desktop;
-            btnChange.Location = new Point(32, 383);
+            btnChange.Location = new Point(32, 475);
             btnChange.Margin = new Padding(4);
             btnChange.Name = "btnChange";
             btnChange.Size = new Size(149, 56);
@@ -122,7 +125,7 @@
             btnAdd.BackColor = Color.LightGreen;
             btnAdd.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAdd.ForeColor = SystemColors.Desktop;
-            btnAdd.Location = new Point(32, 383);
+            btnAdd.Location = new Point(32, 475);
             btnAdd.Margin = new Padding(4);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(149, 56);
@@ -130,10 +133,34 @@
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = false;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(638, 28);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(290, 352);
+            pictureBox1.TabIndex = 10;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
+            // btnUpload
+            // 
+            btnUpload.BackColor = Color.Violet;
+            btnUpload.Font = new Font("Cascadia Mono", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnUpload.ForeColor = SystemColors.Desktop;
+            btnUpload.Location = new Point(32, 401);
+            btnUpload.Margin = new Padding(4);
+            btnUpload.Name = "btnUpload";
+            btnUpload.Size = new Size(149, 40);
+            btnUpload.TabIndex = 11;
+            btnUpload.Text = "Upload ảnh";
+            btnUpload.UseVisualStyleBackColor = false;
+            // 
             // ChangeLocationControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btnUpload);
+            Controls.Add(pictureBox1);
             Controls.Add(btnAdd);
             Controls.Add(btnChange);
             Controls.Add(label4);
@@ -145,8 +172,9 @@
             Controls.Add(label1);
             Controls.Add(txtLocationName);
             Name = "ChangeLocationControl";
-            Size = new Size(576, 494);
+            Size = new Size(1059, 548);
             Load += ChangeLocationControl_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -163,5 +191,7 @@
         private TextBox txtCountry;
         private Button btnChange;
         private Button btnAdd;
+        private PictureBox pictureBox1;
+        private Button btnUpload;
     }
 }

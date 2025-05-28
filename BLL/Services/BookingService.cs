@@ -1,4 +1,4 @@
-﻿using BLL.Interfaces;
+using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;
 using System;
@@ -24,42 +24,39 @@ namespace BLL.Services
             return _bookingRepository.GetAll();
         }
 
-        // Lấy thông tin chi tiết của một booking dựa trên BookingID
+        
         public Booking GetBookingById(Guid bookingId)
         {
             return _bookingRepository.GetById(bookingId);
         }
 
-        // Thêm mới một booking (có kiểm tra số vé còn lại)
+        
         public void AddBooking(Booking booking)
         {
-            // Lấy thông tin chi tiết của chuyến đi (Trip) dựa trên TripID
             var trip = _tripService.GetTripById(booking.TripID);
             if (trip == null)
             {
-                // Ném lỗi nếu Trip không tồn tại
+               
                 throw new ArgumentException("Mã chuyến đi không hợp lệ. Chuyến đi không tồn tại.");
             }
 
-            // Thực hiện kiểm tra số lượng vé
             ValidateBooking(booking, trip);
 
-            // Nếu hợp lệ, thêm booking vào hệ thống
+            
             _bookingRepository.Add(booking);
         }
 
-        // Cập nhật thông tin booking (có kiểm tra số vé còn lại)
+     
         public void UpdateBooking(Booking booking)
         {
-            // Lấy thông tin chi tiết của chuyến đi (Trip) dựa trên TripID
+            
             var trip = _tripService.GetTripById(booking.TripID);
             if (trip == null)
             {
-                // Ném lỗi nếu Trip không tồn tại
                 throw new ArgumentException("Mã chuyến đi không hợp lệ. Chuyến đi không tồn tại.");
             }
 
-            // Thực hiện kiểm tra số lượng vé (loại trừ booking hiện tại nếu đang cập nhật)
+           
             ValidateBooking(booking, trip, isUpdate: true);
 
             // Nếu hợp lệ, cập nhật thông tin booking
@@ -93,7 +90,7 @@ namespace BLL.Services
         // Hàm kiểm tra số lượng vé có hợp lệ hay không
         private void ValidateBooking(Booking booking, Trip trip, bool isUpdate = false)
         {
-            // Tính tổng số vé đã được đặt cho chuyến đi này
+          
             var totalBookedTickets = _bookingRepository
                 .FindByTripId(booking.TripID)
                 .Where(b => !isUpdate || b.BookingID != booking.BookingID) // Loại trừ booking hiện tại nếu đang cập nhật

@@ -1,5 +1,11 @@
-﻿using BLL.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using BLL.Interfaces;
 using Core.Entities;
+using Microsoft.AspNetCore.Hosting; 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -10,10 +16,15 @@ namespace API.Controllers
     {
         private const string ApiPath = "api/v1/[controller]";
         private readonly ILocationService _locationService;
+        private readonly IWebHostEnvironment _env;    
 
-        public LocationController(ILocationService locationService)
+        // Inject IWebHostEnvironment vào constructor
+        public LocationController(
+            ILocationService locationService,
+            IWebHostEnvironment env)
         {
             _locationService = locationService;
+            _env = env; // <- Gán vào field
         }
 
         [HttpGet]
@@ -27,12 +38,7 @@ namespace API.Controllers
         public ActionResult<Location> GetLocation(Guid id)
         {
             var location = _locationService.GetLocation(id);
-
-            if (location == null)
-            {
-                return NotFound();
-            }
-
+            if (location == null) return NotFound();
             return Ok(location);
         }
 
@@ -60,6 +66,33 @@ namespace API.Controllers
         {
             _locationService.DeleteLocation(id);
             return NoContent();
+        }
+
+        // ---------------- Upload Image Action ----------------
+        [HttpPost("{id:guid}/upload-image")]
+        public async Task<IActionResult> UploadImage(
+            Guid id,
+            IFormFile imageFile)
+        {
+            // 1. Check tồn tại location
+            var location = _locationService.GetLocation(id);
+            if (location == null)
+                return NotFound();
+
+            // 2. Lưu file lên server
+            var uploadsFolder = Path.Combine(_env.WebRootPath, "images", "locations");
+            Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = $"{id}{Path.GetExtension(imageFile.FileName)}";
+            var filePath = Path.Combine(uploadsFolder, fileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+                await imageFile.CopyToAsync(stream);
+
+            // 3. Cập nhật ImageUrl
+            location.ImageUrl = $"/images/locations/{fileName}";
+            _locationService.UpdateLocation(location);
+
+            return Ok(new { imageUrl = location.ImageUrl });
         }
     }
 }
