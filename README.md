@@ -6,7 +6,7 @@
 
 - Winform .NET Core
 - ASP.NET Core API
-- ADO.NET
+- Entity Framework Core
 - ASP.NET Core MVC
 
  # Các tầng
