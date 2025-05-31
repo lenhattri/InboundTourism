@@ -1,4 +1,4 @@
-﻿using Base.Utils.Hash;
+using Base.Utils.Hash;
 using BLL.Interfaces;
 using Core.Entities;
 using DAL.Interfaces;

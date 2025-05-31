@@ -1,43 +1,146 @@
-﻿@model List<Web.Models.TourWithLocations>
+@model List<Web.Models.TourWithLocations>
 @{
     ViewData["Title"] = "Trang Chủ";
 }
 
-@if (ViewBag.ShowBookingConfirmation == true)
-{
-    <div class="alert alert-success">
-        <h3>Đặt chỗ thành công!</h3>
-    </div>
-}
+<style>
 
-@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
-{
-    <div class="alert alert-danger">
-        @ViewBag.ErrorMessage
-    </div>
-}
+    .main-title {
+        color: #e6007a;
+        font-weight: 800;
+        letter-spacing: 1px;
+        margin-bottom: 2rem;
+        text-shadow: 1px 2px 8px rgba(230,0,122,0.05);
+    }
+    .card-tour {
+        border-radius: 1rem;
+        background: #fff0f6;
+        border: none;
+        transition: box-shadow 0.15s, transform 0.15s;
+        box-shadow: 0 4px 20px rgba(230,0,122,0.10);
+        min-height: 340px;
+        position: relative;
+        overflow: hidden;
+    }
+    .card-tour:hover {
+        box-shadow: 0 12px 32px rgba(230,0,122,0.18), 0 2px 6px rgba(0,0,0,0.07);
+        transform: translateY(-7px) scale(1.03);
+        border-color: #e6007a;
+    }
+    .tour-title {
+        color: #e6007a;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.5px;
+    }
+    .tour-desc {
+        color: #444;
+        min-height: 48px;
+    }
+    .tour-destination {
+        color: #c40066;
+        font-weight: 600;
+        font-size: 1.07rem;
+        margin-bottom: 0.6rem;
+        margin-top: 1rem;
+    }
+    .location-badge {
+        display: inline-block;
+        background: #ffe2f0;
+        color: #e6007a;
+        border-radius: 1rem;
+        padding: 0.18em 0.8em 0.18em 0.5em;
+        font-size: 1rem;
+        margin: 0 0.18em 0.25em 0;
+        font-weight: 500;
+        box-shadow: 0 1px 4px #e6007a22;
+        transition: background 0.12s;
+    }
+    .location-badge:hover {
+        background: #ffd0ec;
+        color: #b1005a;
+    }
+    .btn-tour {
+        background: linear-gradient(90deg,#e6007a 60%,#ff97d6 100%);
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        border-radius: 1.6em;
+        font-size: 1.1rem;
+        padding-left: 1.5em;
+        padding-right: 1.5em;
+        box-shadow: 0 2px 8px #e6007a22;
+    }
+    .btn-tour:hover {
+        background: linear-gradient(90deg,#ff008a 70%,#e6007a 100%);
+        color: #fff;
+    }
 
-<div class="container">
-    <h2>Danh sách các Tour</h2>
-    <div class="row">
+
+</style>
+
+<div class="container py-5">
+    @if (ViewBag.ShowBookingConfirmation == true)
+    {
+        <div class="alert alert-success shadow-sm mb-4 rounded-3 text-center fs-5">
+            <i class="bi bi-check-circle-fill me-2"></i> <b>Đặt chỗ thành công!</b>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger shadow-sm mb-4 rounded-3 text-center fs-5">
+            <i class="bi bi-x-circle me-2"></i> @ViewBag.ErrorMessage
+        </div>
+    }
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-9">
+            <h1 class="main-title display-5 text-center">
+                <i class="bi bi-globe2 me-2"></i>Danh sách các Tour du lịch nổi bật
+            </h1>
+            <p class="lead text-center text-muted mb-4">
+                Khám phá và lựa chọn tour phù hợp với bạn!
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center text-danger fs-4">Hiện chưa có tour nào!</div>
+        }
         @foreach (var tourWithLocations in Model)
         {
             var tour = tourWithLocations.Tour;
             var locations = tourWithLocations.Locations;
 
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">@tour.TourName</h5>
-                        <p class="card-text">@tour.Description</p>
-                        <h6>Điểm đến:</h6>
-                        <ul>
-                            @foreach (var location in locations)
+            <div class="col-12 col-md-6 col-lg-4 d-flex align-items-stretch">
+                <div class="card card-tour w-100 shadow-sm mb-2">
+                    <div class="card-body d-flex flex-column">
+                        <h4 class="tour-title"><i class="bi bi-flag-fill me-1"></i>@tour.TourName</h4>
+                        <div class="tour-desc mb-2">
+                            @tour.Description
+                        </div>
+                        <div class="tour-destination"><i class="bi bi-geo-alt-fill me-1"></i>Điểm đến:</div>
+                        <div class="mb-3">
+                            @if (locations == null || !locations.Any())
                             {
-                                <li>@location.LocationName</li>
+                                <span class="location-badge">Chưa có điểm đến</span>
                             }
-                        </ul>
-                        <a href="@Url.Action("Details", "Tour", new { id = tour.TourID })" class="btn btn-primary">Xem chi tiết</a>
+                            else
+                            {
+                                @foreach (var location in locations)
+                                {
+                                    <span class="location-badge" title="@location.Description">@location.LocationName</span>
+                                }
+                            }
+                        </div>
+                        <div class="mt-auto pt-2 text-end">
+                            <a href="@Url.Action("Details", "Tour", new { id = tour.TourID })"
+                               class="btn btn-tour shadow">
+                                <i class="bi bi-eye-fill me-1"></i> Xem chi tiết
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

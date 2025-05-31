@@ -33,7 +33,12 @@ namespace DAL.Repositories
 
         public void Update(Booking booking)
         {
-            _context.Bookings.Update(booking);
+            
+            var tracked = _context.Bookings.Find(booking.BookingID);
+            if (tracked == null)
+                throw new Exception("Booking không tồn tại.");
+            
+            _context.Entry(tracked).CurrentValues.SetValues(booking);
             _context.SaveChanges();
         }
 

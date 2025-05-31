@@ -135,9 +135,10 @@ namespace Views.UserControls.Changing
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(638, 28);
+            pictureBox1.Location = new Point(560, 55);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(290, 352);
+            pictureBox1.Size = new Size(455, 285);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 10;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;

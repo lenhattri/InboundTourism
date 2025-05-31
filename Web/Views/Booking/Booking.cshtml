@@ -1,54 +1,131 @@
-﻿@model Core.Entities.Booking
+@model Core.Entities.Booking
 @{
     var trip = ViewBag.Trip as Core.Entities.Trip;
     var tour = ViewBag.Tour as Core.Entities.Tour;
     var locations = ViewBag.Locations as List<Core.Entities.Location>;
+    var coreUrl = ViewBag.CoreUrl as string ?? "http://localhost:5173";
     ViewData["Title"] = "Đặt chỗ";
 }
 
+<style>
+    .tour-title {
+        color: #e6007a;
+        font-weight: 900;
+        letter-spacing: 1px;
+    }
+
+    .location-img {
+        border-radius: 0.75rem 0.75rem 0 0;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+
+    .card-location {
+        transition: transform 0.15s;
+    }
+
+        .card-location:hover {
+            transform: translateY(-7px) scale(1.03);
+            box-shadow: 0 8px 32px rgba(230, 0, 122, 0.11);
+            border-color: #e6007a;
+        }
+
+    .bg-pink {
+        background: #fff0f6 !important;
+    }
+
+    .btn-pink {
+        background: linear-gradient(90deg, #e6007a 60%, #ff97d6 100%);
+        border: none;
+        color: #fff;
+        font-weight: bold;
+        box-shadow: 0 2px 8px rgba(230,0,122,0.09);
+    }
+
+        .btn-pink:hover {
+            background: linear-gradient(90deg, #ff008a 70%, #e6007a 100%);
+            color: #fff;
+        }
+
+    .text-pink {
+        color: #e6007a;
+    }
+</style>
+
 <div class="container py-5">
-    <h1 class="display-4 text-center text-pink">Đặt chỗ cho chuyến đi</h1>
+    <div class="row justify-content-center mb-3">
+        <div class="col-lg-8">
+            <h1 class="display-4 text-center tour-title mb-2">
+                <i class="bi bi-ticket-detailed me-2"></i>Đặt chỗ cho chuyến đi
+            </h1>
+            <p class="lead text-center text-muted mb-4">
+                Tận hưởng trải nghiệm du lịch tuyệt vời với chúng tôi!
+            </p>
+        </div>
+    </div>
 
     <!-- Thông tin Tour -->
-    <div class="card my-4 shadow-sm">
-        <div class="card-body">
-            <h2 class="text-pink">Thông tin Tour</h2>
-            <p><strong>Tên Tour:</strong> @tour.TourName</p>
-            <p><strong>Mô tả:</strong> @tour.Description</p>
+    <div class="card rounded-4 my-4 shadow-sm border-0">
+        <div class="card-body p-4">
+            <h2 class="text-pink mb-3"><i class="bi bi-map me-2"></i>Thông tin Tour</h2>
+            <p><strong>Tên Tour:</strong> <span class="fw-bold">@tour.TourName</span></p>
+            <p><strong>Mô tả:</strong> <span class="text-secondary">@tour.Description</span></p>
         </div>
     </div>
 
     <!-- Các điểm đến -->
-    <div class="card my-4 shadow-sm">
-        <div class="card-body">
-            <h2 class="text-pink">Các điểm đến trong Tour</h2>
-            <ul>
+    <div class="card rounded-4 my-4 shadow-sm border-0">
+        <div class="card-body p-4">
+            <h2 class="text-pink mb-4"><i class="bi bi-geo-alt-fill me-2"></i>Các điểm đến trong Tour</h2>
+            <div class="row g-4">
                 @foreach (var location in locations)
                 {
-                    <li><strong>@location.LocationName:</strong> @location.Description</li>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card h-100 card-location bg-pink border-0 shadow-sm">
+                            @if (!string.IsNullOrEmpty(location.ImageUrl))
+                            {
+                                <img src="@(coreUrl + location.ImageUrl)"
+                                     class="location-img card-img-top"
+                                     style="height:220px;object-fit:cover;"
+                                     alt="Ảnh @location.LocationName" />
+                            }
+                            <div class="card-body pb-2">
+                                <h5 class="card-title fw-bold text-pink">@location.LocationName</h5>
+                                <p class="card-text">@location.Description</p>
+                                @if (!string.IsNullOrEmpty(location.City) || !string.IsNullOrEmpty(location.Country))
+                                {
+                                    <p class="text-muted small mb-1">
+                                        <i class="bi bi-geo-alt"></i>
+                                        @(location.City)@(string.IsNullOrEmpty(location.City) || string.IsNullOrEmpty(location.Country) ? "" : ", ")@(location.Country)
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 }
-            </ul>
+            </div>
         </div>
     </div>
 
     <!-- Chi tiết chuyến đi -->
-    <div class="card my-4 shadow-sm">
-        <div class="card-body">
-            <h2 class="text-pink">Chi tiết Chuyến đi</h2>
-            <p><strong>Giá vé:</strong> @trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>
-            <p><strong>Thời gian:</strong> @trip.StartDate.ToShortDateString() - @trip.EndDate.ToShortDateString()</p>
-            <p><strong>Khoảng cách:</strong> @trip.Distance km</p>
-            <p><strong>Số khách tối đa:</strong> @trip.MaxGuests</p>
-            <p><strong>Số vé đã đặt:</strong> @ViewBag.TotalBookedGuests/@trip.MaxGuests</p>
+    <div class="card rounded-4 my-4 shadow-sm border-0">
+        <div class="card-body p-4">
+            <h2 class="text-pink mb-3"><i class="bi bi-info-circle me-2"></i>Chi tiết Chuyến đi</h2>
+            <div class="row gy-2">
+                <div class="col-12 col-sm-6 col-lg-4"><strong>Giá vé:</strong> <span class="text-success fw-bold">@trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</span></div>
+                <div class="col-12 col-sm-6 col-lg-4"><strong>Thời gian:</strong> @trip.StartDate.ToShortDateString() - @trip.EndDate.ToShortDateString()</div>
+                <div class="col-12 col-sm-6 col-lg-4"><strong>Khoảng cách:</strong> @trip.Distance km</div>
+                <div class="col-12 col-sm-6 col-lg-4"><strong>Số khách tối đa:</strong> @trip.MaxGuests</div>
+                <div class="col-12 col-sm-6 col-lg-4"><strong>Số vé đã đặt:</strong> <span class="fw-bold text-danger">@ViewBag.TotalBookedGuests</span> / @trip.MaxGuests</div>
+            </div>
         </div>
     </div>
 
     <!-- Thông báo lỗi -->
     @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage) || !ViewData.ModelState.IsValid)
     {
-        <div class="alert alert-danger">
+        <div class="alert alert-danger mt-4">
             <strong>Đã xảy ra lỗi:</strong>
-            <ul>
+            <ul class="mb-0">
                 @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
                 {
                     <li>@ViewBag.ErrorMessage</li>
@@ -68,20 +145,23 @@
     }
 
     <!-- Form đặt chỗ -->
-    <form method="post" class="card my-4 p-4 shadow-sm" onsubmit="return confirmBooking();">
+    <form method="post" class="card rounded-4 my-5 p-4 px-md-5 mx-auto shadow-sm border-0" style="max-width:600px" onsubmit="return confirmBooking();">
         <input type="hidden" asp-for="TripID" value="@trip.TripID" />
-        <div class="form-group mb-3">
-            <label class="text-pink">Số lượng vé:</label>
-            <input asp-for="NumberOfGuests" class="form-control bg-light-pink" id="numberOfGuests" />
-            <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
+        <h3 class="text-pink mb-4 text-center"><i class="bi bi-pencil-square me-2"></i>Đặt vé ngay</h3>
+        <div class="mb-3">
+            <label class="form-label text-pink fw-semibold">Số lượng vé</label>
+            <input asp-for="NumberOfGuests" class="form-control form-control-lg bg-light" id="numberOfGuests" placeholder="Nhập số lượng vé muốn đặt" min="1" max="@trip.MaxGuests" />
+            <span asp-validation-for="NumberOfGuests" class="text-danger small"></span>
         </div>
-
-        <div class="form-group mb-4">
-            <label class="text-pink">Tổng giá:</label>
-            <span id="totalPrice" class="d-block text-pink fw-bold">@trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</span>
+        <div class="mb-4">
+            <label class="form-label text-pink fw-semibold">Tổng giá</label>
+            <span id="totalPrice" class="d-block fs-5 text-pink fw-bold">@trip.Price.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</span>
         </div>
-
-        <button type="submit" class="btn btn-pink btn-block">Đặt chỗ</button>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-pink btn-lg">
+                <i class="bi bi-cart-plus me-2"></i>Đặt chỗ
+            </button>
+        </div>
     </form>
 </div>
 

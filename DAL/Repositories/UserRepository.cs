@@ -33,9 +33,17 @@ namespace DAL.Repositories
 
         public void Update(User user)
         {
-            _context.Users.Update(user);
+            // Lấy bản thể đang được EF theo dõi
+            var tracked = _context.Users.Find(user.UserID);
+            if (tracked == null) throw new Exception("User không tồn tại");
+
+            // Cập nhật giá trị từ user bên ngoài vào bản thể tracked
+            _context.Entry(tracked).CurrentValues.SetValues(user);
+
+            // Lưu thay đổi
             _context.SaveChanges();
         }
+
 
         public void Delete(Guid userId)
         {
@@ -68,5 +76,6 @@ namespace DAL.Repositories
                 query = query.Where(u => u.PhoneNumber.Contains(phoneNumber));
             return query.ToList();
         }
+
     }
 }

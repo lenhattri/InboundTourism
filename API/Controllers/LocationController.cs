@@ -1,11 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using BLL.Interfaces;
 using Core.Entities;
-using Microsoft.AspNetCore.Hosting; 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -24,7 +18,7 @@ namespace API.Controllers
             IWebHostEnvironment env)
         {
             _locationService = locationService;
-            _env = env; // <- Gán vào field
+            _env = env; 
         }
 
         [HttpGet]
@@ -71,25 +65,39 @@ namespace API.Controllers
         // ---------------- Upload Image Action ----------------
         [HttpPost("{id:guid}/upload-image")]
         public async Task<IActionResult> UploadImage(
-            Guid id,
-            IFormFile imageFile)
+    Guid id,
+    IFormFile imageFile)
         {
-            // 1. Check tồn tại location
+            // 1. Lấy location
             var location = _locationService.GetLocation(id);
             if (location == null)
                 return NotFound();
 
-            // 2. Lưu file lên server
+            // 2. Thư mục lưu ảnh
             var uploadsFolder = Path.Combine(_env.WebRootPath, "images", "locations");
             Directory.CreateDirectory(uploadsFolder);
 
-            var fileName = $"{id}{Path.GetExtension(imageFile.FileName)}";
-            var filePath = Path.Combine(uploadsFolder, fileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
-                await imageFile.CopyToAsync(stream);
+            // 3. Xoá file cũ
+            if (!string.IsNullOrEmpty(location.ImageUrl))
+            {
+                var oldFileName = Path.GetFileName(location.ImageUrl);
+                var oldFilePath = Path.Combine(uploadsFolder, oldFileName);
+                if (System.IO.File.Exists(oldFilePath))
+                    System.IO.File.Delete(oldFilePath);
+            }
 
-            // 3. Cập nhật ImageUrl
-            location.ImageUrl = $"/images/locations/{fileName}";
+            // 4. Tạo tên file mới 
+            var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
+            var newFilePath = Path.Combine(uploadsFolder, newFileName);
+
+            // 5. Lưu file mới
+            using (var stream = new FileStream(newFilePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+
+            // 6. Cập nhật ImageUrl và lưu DB
+            location.ImageUrl = $"/images/locations/{newFileName}";
             _locationService.UpdateLocation(location);
 
             return Ok(new { imageUrl = location.ImageUrl });

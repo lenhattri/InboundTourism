@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Base.Utils.Fetch;
 using Core.Entities;
 using Base.Config;
@@ -106,6 +106,7 @@ namespace Web.Controllers
 
                 // Nếu API trả lỗi
                 ViewBag.ErrorMessage = response.ErrorMessage ?? "Đặt chỗ thất bại. Vui lòng thử lại.";
+                ViewBag.CoreUrl = GlobalConfig.CORE_URL;
                 await AddViewBagDataForTripAndTour(tripId);
                 return View(booking);
             }
